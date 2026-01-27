@@ -50,7 +50,7 @@ export default function UploadPage() {
             <div className="relative h-12 w-auto aspect-3/1">
                  {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="/logo.png" 
+                  src="/GERIRISK WT-SVG.svg" 
                   alt="GeriRisk Logo" 
                   className="h-full w-auto object-contain"
                 />
