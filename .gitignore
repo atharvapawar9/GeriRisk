@@ -1,7 +1,5 @@
-
-
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -40,6 +38,17 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/Lib
+# Python virtual environment
 /Lib
 /Scripts
+/Include
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+pyvenv.cfg
+pip-selfcheck.json
+
+# IDE
+.vscode/
+.idea/
