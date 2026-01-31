@@ -8,7 +8,7 @@ export default function Home() {
         </p>
 
         <div className="mt-6 rounded-2xl bg-white p-6 shadow border-l-4 border-primary">
-          <p className="text-primary font-medium">Week 1 Goal:</p>
+          <p className="text-primary font-medium">User Journey:</p>
           <ul className="mt-2 list-disc pl-6 text-gray-700">
             <li>Setup Next.js + Tailwind</li>
             <li>Setup Supabase Storage</li>
