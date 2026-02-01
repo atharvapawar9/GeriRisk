@@ -9,6 +9,7 @@ import SleepTimeline from "@/components/SleepTimeline";
 import DataTable from "@/components/DataTable";
 import { ProcessResponse } from "@/lib/api";
 import { RefreshCw } from "lucide-react";
+import Image from "next/image";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -77,9 +78,18 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#f3f4f6] font-sans text-gray-900 pb-12">
       {/* Header */}
+
       <header className="bg-[#1e293b] text-white px-8 py-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
         <div className="flex items-center gap-3">
-            <div className="font-bold text-xl tracking-tight">Geriatric Wearable Risk Monitor</div>
+             <Image 
+               src="/GERIRISK WT-SVG.svg" 
+               alt="GeriRisk Logo" 
+               width={150} 
+               height={40} 
+               className="h-10 w-auto"
+               priority
+             />
+             {/* <div className="font-bold text-xl tracking-tight">Geriatric Wearable Risk Monitor</div> */}
         </div>
         <button 
           onClick={() => router.push('/upload')}
