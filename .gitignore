@@ -52,3 +52,6 @@ pip-selfcheck.json
 # IDE
 .vscode/
 .idea/
+
+# Prompts
+Prompts/
