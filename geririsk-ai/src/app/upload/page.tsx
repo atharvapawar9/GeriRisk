@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { processFile } from "@/lib/api";
 
 export default function UploadPage() {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -15,23 +18,24 @@ export default function UploadPage() {
 
     setStatus("uploading");
 
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
+    try {
+      const data = await processFile(file);
+      
+      // Store in localStorage for dashboard access (week 4 requirement context)
+      localStorage.setItem("dashboard_data", JSON.stringify(data));
+      localStorage.setItem("dashboard_filename", file.name);
+      
+      setStatus("success");
+      
+      // Short delay to show success state before redirect
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
+      
+    } catch (error) {
+      console.error(error);
       setStatus("error");
-      console.error(data.error);
-      return;
     }
-
-    setStatus("success");
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -175,7 +179,7 @@ export default function UploadPage() {
                             disabled={!file || status === "uploading"}
                             className="px-10 py-4 bg-primary text-white text-sm font-bold uppercase tracking-widest hover:bg-primary/90 disabled:bg-gray-200 disabled:text-gray-400 transition-all active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-accent/20"
                             >
-                            Analyze Data
+                            {status === "uploading" ? "Analyzing..." : "Analyze Data"}
                             </button>
                         </div>
                     </div>
