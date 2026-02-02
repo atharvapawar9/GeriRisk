@@ -57,7 +57,7 @@ export default function UploadPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-4">
-            <div className="relative h-12 w-auto aspect-3/1">
+            <div className="relative h-12 w-auto aspect-[3/1]">
                  {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src="/GERIRISK WT-SVG.svg" 
