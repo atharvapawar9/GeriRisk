@@ -59,7 +59,7 @@ export default function Home() {
       </motion.header>
 
       {/* HERO SECTION */}
-      <section className="pt-32 pb-20 px-6 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] bg-gray-50/50">
+      <section className="pt-32 pb-20 px-6 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [bg-size:20px_20px] bg-gray-50/50">
         <motion.div 
           className="max-w-4xl mx-auto text-center"
           variants={container}
