@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { processFile } from "@/lib/api";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -49,7 +50,12 @@ export default function UploadPage() {
     <main className="flex flex-col h-screen w-full bg-white text-gray-900 font-sans selection:bg-accent selection:text-primary overflow-hidden">
         
         {/* Header Section - Fixed Height */}
-        <header className="flex-none h-16 border-b border-gray-100 flex items-center justify-between px-6 md:px-12 bg-white z-10">
+        <motion.header 
+          className="flex-none h-16 border-b border-gray-100 flex items-center justify-between px-6 md:px-12 bg-white z-10"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="flex items-center gap-4">
             <div className="relative h-12 w-auto aspect-3/1">
                  {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -73,13 +79,18 @@ export default function UploadPage() {
                 AI
              </div>
           </div>
-        </header>
+        </motion.header>
 
         {/* Main Content - Flex Grow */}
         <div className="flex-1 flex overflow-hidden">
             
             {/* Sidebar / Info Column */}
-            <aside className="w-1/3 bg-gray-50 border-r border-gray-100 p-12 overflow-y-auto hidden lg:block">
+            <motion.aside 
+              className="w-1/3 bg-gray-50 border-r border-gray-100 p-12 overflow-y-auto hidden lg:block"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
                  <div className="border-l-4 border-primary pl-6 mb-12">
                     <h1 className="text-4xl font-light tracking-tight text-primary uppercase">
                         Data Import
@@ -90,7 +101,11 @@ export default function UploadPage() {
                 </div>
 
                 <div className="space-y-8">
-                    <div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
                     <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-3">
                         Protocol
                     </h3>
@@ -99,9 +114,14 @@ export default function UploadPage() {
                         All files are processed through our secure medical-grade pipeline 
                         before analysis.
                     </p>
-                    </div>
+                    </motion.div>
                     
-                    <div className="border border-gray-200 p-6 bg-white/50">
+                    <motion.div 
+                      className="border border-gray-200 p-6 bg-white/50"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
                     <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                         System Status
                     </h3>
@@ -109,19 +129,26 @@ export default function UploadPage() {
                         <div className="h-2 w-2 bg-primary rounded-full animate-pulse"></div>
                         <span className="text-xs font-medium text-gray-700">Ready for Import</span>
                     </div>
-                    </div>
+                    </motion.div>
                 </div>
-            </aside>
+            </motion.aside>
 
             {/* Main Interactive Area */}
             <section className="flex-1 p-8 md:p-12 lg:p-24 overflow-y-auto flex flex-col justify-center bg-white">
                 <div className="max-w-2xl w-full mx-auto">
-                     <div className="border border-gray-200 p-12 hover:border-primary transition-colors duration-300 shadow-sm hover:shadow-lg">
+                     <motion.div 
+                       className="border border-gray-200 p-12 hover:border-primary transition-colors duration-300 shadow-sm hover:shadow-lg"
+                       initial={{ scale: 0.95, opacity: 0 }}
+                       animate={{ scale: 1, opacity: 1 }}
+                       transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.3 }}
+                     >
               
                         {/* File Drop Area Visual */}
-                        <div 
+                        <motion.div 
                             onClick={() => fileInputRef.current?.click()}
                             className="group cursor-pointer border-2 border-dashed border-gray-300 bg-gray-50 py-24 text-center hover:border-primary hover:bg-accent/10 transition-all duration-300"
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
                         >
                             <input
                             ref={fileInputRef}
@@ -132,57 +159,92 @@ export default function UploadPage() {
                             />
                             
                             <div className="space-y-6">
-                            <div className="mx-auto h-16 w-16 text-gray-400 group-hover:text-primary transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
-                                <path strokeLinecap="square" strokeLinejoin="miter" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                                </svg>
-                            </div>
+                            <motion.div 
+                              className="mx-auto h-16 w-16 text-gray-400 group-hover:text-primary transition-colors"
+                              animate={status === "uploading" ? { rotate: 360 } : {}}
+                              transition={status === "uploading" ? { repeat: Infinity, duration: 1, ease: "linear" } : {}}
+                            >
+                                {status === "uploading" ? (
+                                   <div className="h-full w-full rounded-full border-4 border-primary border-t-transparent" />
+                                ) : (
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
+                                  <path strokeLinecap="square" strokeLinejoin="miter" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                  </svg>
+                                )}
+                            </motion.div>
                             
                             <div className="text-lg text-gray-600">
                                 {file ? (
-                                <span className="font-medium text-primary">{file.name}</span>
+                                <motion.span 
+                                  key="file-name"
+                                  initial={{ opacity: 0, y: 5 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  className="font-medium text-primary"
+                                >
+                                  {file.name}
+                                </motion.span>
                                 ) : (
-                                <>
+                                <span className="font-medium">
                                     <span className="font-semibold underline decoration-primary underline-offset-4 text-primary">Click to upload</span> or drag and drop
-                                </>
+                                </span>
                                 )}
                             </div>
                             <p className="text-sm text-gray-400 uppercase tracking-wide">CSV files up to 50MB</p>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Action Bar */}
                         <div className="mt-12 flex items-center justify-between">
                             
                             {/* Status Indicator */}
                             <div className="flex-1 pr-6">
+                            <AnimatePresence mode="wait">
                             {status === "uploading" && (
-                                <div className="text-sm text-primary animate-pulse">Processing data stream...</div>
+                                <motion.div 
+                                  key="uploading"
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0 }}
+                                  className="text-sm text-primary animate-pulse"
+                                >Processing data stream...</motion.div>
                             )}
                             {status === "success" && (
-                                <div className="text-sm text-primary font-medium flex items-center gap-2">
+                                <motion.div 
+                                  key="success"
+                                  initial={{ opacity: 0, scale: 0.9 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  className="text-sm text-primary font-medium flex items-center gap-2"
+                                >
                                     <span className="block h-1.5 w-1.5 bg-primary"></span>
                                     Upload complete
-                                </div>
+                                </motion.div>
                             )}
                             {status === "error" && (
-                                <div className="text-sm text-red-600 font-medium flex items-center gap-2">
+                                <motion.div 
+                                  key="error"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  className="text-sm text-red-600 font-medium flex items-center gap-2"
+                                >
                                     <span className="block h-1.5 w-1.5 bg-red-600"></span>
                                     Error processing file
-                                </div>
+                                </motion.div>
                             )}
+                            </AnimatePresence>
                             </div>
 
                             {/* Primary Action */}
-                            <button
+                            <motion.button
                             onClick={handleUpload}
                             disabled={!file || status === "uploading"}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             className="px-10 py-4 bg-primary text-white text-sm font-bold uppercase tracking-widest hover:bg-primary/90 disabled:bg-gray-200 disabled:text-gray-400 transition-all active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-accent/20"
                             >
                             {status === "uploading" ? "Analyzing..." : "Analyze Data"}
-                            </button>
+                            </motion.button>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         </div>
