@@ -9,6 +9,8 @@ export interface ProcessResponse {
     minSpO2: number;
     totalSteps: number;
     recordCount: number;
+    cardiacEvents: number;
+    spo2Events: number;
   };
   predictions: {
     cardiacRisk: { score: number; level: "High" | "Moderate" | "Low" };

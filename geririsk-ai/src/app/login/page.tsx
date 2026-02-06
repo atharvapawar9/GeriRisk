@@ -19,14 +19,14 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f8f9fa] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [bg-size:16px_16px]">
+    <main className="flex min-h-screen items-center justify-center bg-background bg-[radial-gradient(var(--border)_1px,transparent_1px)] [bg-size:16px_16px]">
       <motion.div 
         className="w-full max-w-md p-8"
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, duration: 0.5 }}
       >
-        <div className="relative overflow-hidden rounded-2xl bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/20 p-8 sm:p-10">
+        <div className="relative overflow-hidden rounded-lg bg-card/70 backdrop-blur-xl shadow-lg border border-border p-8 sm:p-10">
           
           <div className="mb-10 text-center">
             <motion.div 
@@ -45,7 +45,7 @@ export default function LoginPage() {
                />
             </motion.div>
             <motion.h1 
-              className="text-2xl font-semibold tracking-tight text-gray-900"
+              className="text-2xl font-semibold tracking-tight text-foreground"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -53,7 +53,7 @@ export default function LoginPage() {
               GeriRisk Analytics
             </motion.h1>
             <motion.p 
-              className="mt-2 text-sm text-gray-500"
+              className="mt-2 text-sm text-muted-foreground"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -69,15 +69,15 @@ export default function LoginPage() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <label htmlFor="email" className="text-xs font-medium uppercase tracking-wide text-gray-500">
+              <label htmlFor="email" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Email Address
               </label>
               <motion.input
-                whileFocus={{ scale: 1.01, borderColor: "#0000c9" }}
+                whileFocus={{ scale: 1.01 }}
                 id="email"
                 type="email"
                 placeholder="doctor@clinic.com"
-                className="w-full rounded-lg border border-gray-200 bg-white/50 px-4 py-3 text-sm text-gray-900 outline-none transition-all focus:ring-1 focus:ring-[#0000c9]"
+                className="w-full rounded-lg border border-border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
                 defaultValue="doctor@clinic.com"
               />
             </motion.div>
@@ -89,16 +89,16 @@ export default function LoginPage() {
               transition={{ delay: 0.6 }}
             >
                <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-xs font-medium uppercase tracking-wide text-gray-500">
+                <label htmlFor="password" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                     Password
                 </label>
                </div>
               <motion.input
-                whileFocus={{ scale: 1.01, borderColor: "#0000c9" }}
+                whileFocus={{ scale: 1.01 }}
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                className="w-full rounded-lg border border-gray-200 bg-white/50 px-4 py-3 text-sm text-gray-900 outline-none transition-all focus:ring-1 focus:ring-[#0000c9]"
+                className="w-full rounded-lg border border-border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
                 defaultValue="password"
               />
             </motion.div>
@@ -106,26 +106,26 @@ export default function LoginPage() {
             <motion.button
               type="submit"
               disabled={isLoading}
-              whileHover={{ scale: 1.02, boxShadow: "0 4px 12px rgba(0, 0, 201, 0.2)" }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="group relative w-full overflow-hidden rounded-lg bg-[#0000c9] py-3 text-sm font-semibold text-white transition-all disabled:opacity-70"
+              className="group relative w-full overflow-hidden rounded-lg bg-primary py-3 text-sm font-semibold text-primary-foreground transition-all disabled:opacity-70 shadow-sm"
             >
               <span className={`flex items-center justify-center gap-2 ${isLoading ? "invisible" : ""}`}>
                 Sign In
               </span>
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground"></div>
                 </div>
               )}
             </motion.button>
           </form>
 
           <motion.div 
-            className="mt-8 text-center text-xs text-gray-400"
+            className="mt-8 text-center text-xs text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}

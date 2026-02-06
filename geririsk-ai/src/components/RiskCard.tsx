@@ -13,22 +13,22 @@ export default function RiskCard({ type, score, level, events, label, subtext }:
   const getColors = () => {
     switch (level) {
       case "High":
-        return "bg-red-50 border-red-200 text-red-900";
+        return "bg-destructive/10 border-destructive/20 text-destructive";
       case "Moderate":
-        return "bg-amber-50 border-amber-200 text-amber-900";
+        return "bg-amber-500/10 border-amber-500/20 text-amber-600";
       default:
-        return "bg-blue-50 border-blue-200 text-[#0000c9]";
+        return "bg-primary/5 border-primary/10 text-primary";
     }
   };
 
   const getBadgeColors = () => {
     switch (level) {
       case "High":
-        return "bg-[#d32f2f] text-white";
+        return "bg-destructive text-destructive-foreground";
       case "Moderate":
-        return "bg-[#f59e0b] text-white"; // Fixed amber color
+        return "bg-amber-500 text-white";
       default:
-        return "bg-[#a8bcff] text-[#0000c9]";
+        return "bg-primary text-primary-foreground";
     }
   };
 
@@ -44,8 +44,8 @@ export default function RiskCard({ type, score, level, events, label, subtext }:
   };
 
   return (
-    <div className={`rounded-xl border p-6 shadow-sm transition-all hover:shadow-md ${getColors()}`}>
-      <div className="flex items-center gap-2 mb-4 opacity-80">
+    <div className={`rounded-lg border p-6 shadow-sm transition-all hover:shadow-md backdrop-blur-md border-white/20 ${getColors()}`}>
+      <div className="flex items-center gap-2 mb-4 opacity-90">
         {getIcon()}
         <span className="font-semibold text-sm uppercase tracking-wider">{label}</span>
       </div>
@@ -57,9 +57,7 @@ export default function RiskCard({ type, score, level, events, label, subtext }:
         </span>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm font-medium opacity-90 border-t border-current/10 pt-3">
-        <span>{events} Events Today <span className="opacity-50 ml-1">{events}</span></span>
-      </div>
+
       
       <p className="mt-2 text-xs opacity-70">
         {subtext}

@@ -69,6 +69,8 @@ export interface DatasetAggregates {
   minSpO2: number | null;
   totalSteps: number;
   recordCount: number;
+  cardiacEvents: number;
+  spo2Events: number;
 }
 
 /**
@@ -124,6 +126,10 @@ export function calculateDatasetAggregates(
 
   const totalSteps = stepsValues.reduce((sum, val) => sum + val, 0);
 
+  // Calculate event counts
+  const cardiacEvents = heartRates.filter(hr => hr > 100).length;
+  const spo2Events = spO2Values.filter(val => val < 95).length;
+
   return {
     avgHeartRate,
     maxHeartRate,
@@ -131,5 +137,7 @@ export function calculateDatasetAggregates(
     minSpO2,
     totalSteps,
     recordCount,
+    cardiacEvents,
+    spo2Events
   };
 }
