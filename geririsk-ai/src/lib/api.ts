@@ -11,6 +11,7 @@ export interface ProcessResponse {
     recordCount: number;
     cardiacEvents: number;
     spo2Events: number;
+    sleepBreakdown?: Record<string, number>;
   };
   predictions: {
     cardiacRisk: { score: number; level: "High" | "Moderate" | "Low" };

@@ -71,6 +71,7 @@ export interface DatasetAggregates {
   recordCount: number;
   cardiacEvents: number;
   spo2Events: number;
+  sleepBreakdown?: Record<string, number>;
 }
 
 /**
@@ -130,6 +131,38 @@ export function calculateDatasetAggregates(
   const cardiacEvents = heartRates.filter(hr => hr > 100).length;
   const spo2Events = spO2Values.filter(val => val < 95).length;
 
+  // Extract sleep stage values
+  const sleepStageCol = Object.keys(data[0] || {}).find(k => 
+    k.toLowerCase().includes('sleep') && (k.toLowerCase().includes('stage') || k.toLowerCase().includes('phase'))
+  ) || 'sleep_stage';
+
+  const sleepStages = data
+    .map(record => record[sleepStageCol])
+    .filter((v): v is string => typeof v === 'string');
+    
+  // Calculate sleep breakdown
+  const sleepBreakdown: Record<string, number> = {};
+  if (sleepStages.length > 0) {
+      const total = sleepStages.length;
+      sleepStages.forEach(stage => {
+          const s = stage.toLowerCase();
+          let key = 'light'; // default
+          if (s.includes('deep')) key = 'deep';
+          else if (s.includes('rem')) key = 'rem';
+          else if (s.includes('awake') || s.includes('wake')) key = 'awake';
+          
+          sleepBreakdown[key] = (sleepBreakdown[key] || 0) + 1;
+      });
+      
+      // Convert to percentages
+      Object.keys(sleepBreakdown).forEach(key => {
+          sleepBreakdown[key] = Math.round((sleepBreakdown[key] / total) * 100);
+      });
+  } else {
+      // Fallback if no sleep data found - maybe generic distribution or empty?
+      // Let's leave it empty so UI can handle it or show "No sleep data"
+  }
+
   return {
     avgHeartRate,
     maxHeartRate,
@@ -138,6 +171,7 @@ export function calculateDatasetAggregates(
     totalSteps,
     recordCount,
     cardiacEvents,
-    spo2Events
+    spo2Events,
+    sleepBreakdown
   };
 }

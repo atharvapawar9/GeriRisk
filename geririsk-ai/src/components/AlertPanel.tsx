@@ -44,9 +44,6 @@ export default function AlertPanel({ alerts }: { alerts: Alert[] }) {
             Download Risk Report
             <span className="block text-xs font-normal opacity-80">(CSV / PDF)</span>
         </button>
-        <button className="w-full bg-secondary text-secondary-foreground text-sm font-medium py-3 rounded-lg hover:bg-secondary/80 transition-colors shadow-sm">
-            Download Processed Data
-        </button>
       </div>
     </div>
   );

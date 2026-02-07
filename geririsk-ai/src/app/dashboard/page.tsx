@@ -203,7 +203,7 @@ export default function DashboardPage() {
 
             {/* 3. Sleep Timeline */}
             <motion.div variants={item}>
-              <SleepTimeline />
+              <SleepTimeline data={data?.aggregates?.sleepBreakdown} />
             </motion.div>
             
              {/* 4. Data Table */}

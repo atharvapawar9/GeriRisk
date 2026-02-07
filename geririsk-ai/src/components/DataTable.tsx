@@ -3,45 +3,59 @@ import { ProcessResponse } from "@/lib/api";
 export default function DataTable({ data }: { data: ProcessResponse }) {
   if (!data || !data.aggregates) return null;
 
+  const { avgHeartRate, maxHeartRate, minHeartRate, minSpO2, totalSteps, recordCount } = data.aggregates;
+
+  const getHeartRateStatus = (bpm: number, type: 'avg' | 'min' | 'max') => {
+    if (type === 'max' && bpm > 110) return 'High';
+    if (type === 'min' && bpm < 45) return 'Low';
+    if (type === 'avg') {
+      if (bpm > 100) return 'High';
+      if (bpm < 60) return 'Low';
+    }
+    return 'Normal';
+  };
+
+  const getSpO2Status = (value: number) => {
+    if (value < 90) return 'Warning';
+    if (value < 95) return 'Low';
+    return 'Normal';
+  };
+
+  const getStepsStatus = (steps: number) => {
+    if (steps > 10000) return 'Excellent';
+    if (steps > 7000) return 'Good';
+    if (steps > 4000) return 'Fair';
+    return 'Low';
+  };
+
   const rows = [
-    { label: "Avg Heart Rate", value: `${Math.round(data.aggregates.avgHeartRate)} bpm`, status: "Normal" },
-    { label: "Max Heart Rate", value: `${Math.round(data.aggregates.maxHeartRate)} bpm`, status: "High" },
-    { label: "Min Heart Rate", value: `${Math.round(data.aggregates.minHeartRate)} bpm`, status: "Low" },
-    { label: "Min SpO2", value: `${Math.round(data.aggregates.minSpO2)}%`, status: data.aggregates.minSpO2 < 92 ? "Warning" : "Normal" },
-    { label: "Total Steps", value: data.aggregates.totalSteps.toLocaleString(), status: "Good" },
-    { label: "Record Count", value: data.aggregates.recordCount.toLocaleString(), status: "Info" },
+    { label: "Avg Heart Rate", value: `${Math.round(avgHeartRate)} bpm`, status: getHeartRateStatus(avgHeartRate, 'avg') },
+    { label: "Max Heart Rate", value: `${Math.round(maxHeartRate)} bpm`, status: getHeartRateStatus(maxHeartRate, 'max') },
+    { label: "Min Heart Rate", value: `${Math.round(minHeartRate)} bpm`, status: getHeartRateStatus(minHeartRate, 'min') },
+    { label: "Min SpO2", value: `${Math.round(minSpO2)}%`, status: getSpO2Status(minSpO2) },
+    { label: "Total Steps", value: totalSteps.toLocaleString(), status: getStepsStatus(totalSteps) },
+    { label: "Record Count", value: recordCount.toLocaleString(), status: "Info" },
   ];
 
   return (
-    <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 overflow-hidden">
-        <div className="px-6 py-4 border-b border-white/10 bg-muted/30">
+    <div className="bg-white/5 backdrop-blur-md rounded-lg border border-white/10 overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/10 bg-white/5">
             <h3 className="font-semibold text-foreground">Detailed Metrics</h3>
         </div>
-      <table className="w-full text-sm text-left">
-        <thead className="bg-muted/50 text-muted-foreground font-medium border-b border-border">
-          <tr>
-            <th className="px-6 py-3">Metric</th>
-            <th className="px-6 py-3">Value</th>
-            <th className="px-6 py-3">Status</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-border">
-          {rows.map((row, idx) => (
-            <tr key={idx} className="hover:bg-muted/30 transition-colors">
-              <td className="px-6 py-4 font-medium text-foreground">{row.label}</td>
-              <td className="px-6 py-4 text-muted-foreground font-mono">{row.value}</td>
-              <td className="px-6 py-4">
-                <span className={`px-2 py-1 rounded text-xs font-semibold 
-                  ${row.status === 'High' || row.status === 'Warning' ? 'bg-amber-500/10 text-amber-700' : 
-                    row.status === 'Low' ? 'bg-blue-500/10 text-blue-700' : 
-                    'bg-green-500/10 text-green-700'}`}>
-                  {row.status}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+        {rows.map((row, idx) => (
+          <div key={idx} className="bg-white/10 rounded-lg py-8 px-6 flex flex-col items-start justify-center text-left space-y-4 hover:bg-white/15 transition-all duration-300 border border-white/10 shadow-xl hover:shadow-2xl hover:-translate-y-1">
+            <span className="text-sm font-medium text-muted-foreground">{row.label}</span>
+            <span className="text-3xl font-bold text-foreground tracking-tight">{row.value}</span>
+            <span className={`px-3 py-1.5 rounded-full text-xs font-bold 
+              ${row.status === 'High' || row.status === 'Warning' ? 'bg-amber-500/10 text-amber-500' : 
+                row.status === 'Low' ? 'bg-blue-500/10 text-blue-500' : 
+                'bg-green-500/10 text-green-500'}`}>
+              {row.status}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
