@@ -18,6 +18,10 @@ export interface ProcessResponse {
     fallRisk: { score: number; level: "High" | "Moderate" | "Low" };
     respiratoryRisk: { score: number; level: "High" | "Moderate" | "Low" };
   };
+  trends: {
+    heartRate: { time: string; value: number }[];
+    spo2: { time: string; value: number }[];
+  };
 }
 
 export async function processFile(file: File): Promise<ProcessResponse> {

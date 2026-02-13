@@ -6,7 +6,7 @@ import path from "path";
 import { supabase } from "@/lib/supabaseClient";
 import { parseCSVString } from "@/lib/csvParser";
 import { preprocessData } from "@/lib/preprocess";
-import { calculateDatasetAggregates } from "@/lib/features";
+import { calculateDatasetAggregates, calculateTrends } from "@/lib/features";
 
 export async function POST(req: Request) {
   try {
@@ -71,6 +71,9 @@ export async function POST(req: Request) {
 
     // Calculate dataset-level aggregates
     const aggregates = calculateDatasetAggregates(preprocessResult.data);
+    
+    // Calculate trends
+    const trends = calculateTrends(preprocessResult.data);
 
     // Log aggregates for debugging
     console.log("Calculated aggregates:", JSON.stringify(aggregates, null, 2));
@@ -125,6 +128,7 @@ export async function POST(req: Request) {
       recordCount: preprocessResult.processed,
       skipped: preprocessResult.skipped,
       aggregates,
+      trends, // Add trends to response
       predictions,
     });
   } catch (err: unknown) {

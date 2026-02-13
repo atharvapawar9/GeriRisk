@@ -175,3 +175,46 @@ export function calculateDatasetAggregates(
     sleepBreakdown
   };
 }
+
+/**
+ * Extract time-series trends from the dataset
+ */
+export function calculateTrends(
+  data: Record<string, unknown>[]
+): {
+  heartRate: { time: string; value: number }[];
+  spo2: { time: string; value: number }[];
+} {
+  // We want to downsample to ~24 points if the dataset is large, or use all points if small
+  // For simplicity, let's take one point per hour if possible, or just decimate the array
+
+  const heartRate = data
+    .filter((r): r is Record<string, unknown> & { timestamp?: string; heart_rate: number } => 
+      typeof r.heart_rate === 'number' && !isNaN(r.heart_rate)
+    )
+    .map(r => ({
+      time: r.timestamp ? new Date(r.timestamp as string).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '',
+      value: r.heart_rate
+    }));
+
+  const spo2 = data
+    .filter((r): r is Record<string, unknown> & { timestamp?: string; spo2: number } => 
+      typeof r.spo2 === 'number' && !isNaN(r.spo2)
+    )
+    .map(r => ({
+      time: r.timestamp ? new Date(r.timestamp as string).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '',
+      value: r.spo2
+    }));
+
+  // Simple decimation to limit data points for the graph (max 24)
+  const decimate = <T>(arr: T[], max: number): T[] => {
+    if (arr.length <= max) return arr;
+    const step = Math.ceil(arr.length / max);
+    return arr.filter((_, i) => i % step === 0).slice(0, max);
+  };
+
+  return {
+    heartRate: decimate(heartRate, 24),
+    spo2: decimate(spo2, 24)
+  };
+}

@@ -47,16 +47,9 @@ export default function DashboardPage() {
     );
   }
 
-  // Mocking trend data for visual parity (since API aggregates are single numbers)
-  const heartRateData = Array.from({ length: 24 }, (_, i) => ({
-    time: `${i}:00`,
-    value: 60 + Math.random() * 40 + (i > 8 && i < 20 ? 20 : 0) // elevated during day
-  }));
-
-  const spo2Data = Array.from({ length: 24 }, (_, i) => ({
-    time: `${i}:00`,
-    value: 94 + Math.random() * 6 - (i < 6 ? 2 : 0) // dips at night
-  }));
+  // Trends data from API
+  const heartRateData = data?.trends?.heartRate || [];
+  const spo2Data = data?.trends?.spo2 || [];
 
   // Generating alerts based on rules
   const alerts = [];
