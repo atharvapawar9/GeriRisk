@@ -44,7 +44,7 @@ export default function RiskCard({ type, score, level, events, label, subtext }:
   };
 
   return (
-    <div className={`rounded-lg border p-6 shadow-sm transition-all hover:shadow-md backdrop-blur-md border-white/20 ${getColors()}`}>
+    <div className={`h-full rounded-lg border p-6 shadow-sm transition-all hover:shadow-md backdrop-blur-md border-white/20 ${getColors()}`}>
       <div className="flex items-center gap-2 mb-4 opacity-90">
         {getIcon()}
         <span className="font-semibold text-sm uppercase tracking-wider">{label}</span>

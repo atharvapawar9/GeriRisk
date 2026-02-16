@@ -131,18 +131,18 @@ export default function DashboardPage() {
       </motion.div>
 
       <motion.main 
-        className="max-w-[1600px] mx-auto p-8 grid grid-cols-12 gap-6"
+        className="max-w-[1400px] mx-auto p-8 grid grid-cols-12 gap-8"
         variants={container}
         initial="hidden"
         animate="show"
       >
         
         {/* LEFT COLUMN - MAIN DASHBOARD */}
-        <div className="col-span-12 lg:col-span-9 space-y-6">
+        <div className="col-span-12 lg:col-span-9 space-y-12">
             
             {/* 1. Risk Summary Cards */}
             <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+                <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
                   <RiskCard 
                       type="cardiac" 
                       label="Cardiac Stress" 
@@ -152,7 +152,7 @@ export default function DashboardPage() {
                       subtext={(data?.aggregates?.cardiacEvents || 0) > 0 ? "High HR spikes detected" : "Heart rate within normal range"}
                   />
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+                <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
                   <RiskCard 
                       type="fall" 
                       label="Fall Risk" 
@@ -162,7 +162,7 @@ export default function DashboardPage() {
                       subtext={fallLevel === 'High' ? "Gait irregularity detected" : "Stability within normal range"}
                   />
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+                <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
                   <RiskCard 
                       type="respiratory" 
                       label="Respiratory / SpO2" 
@@ -175,8 +175,8 @@ export default function DashboardPage() {
             </motion.div>
 
             {/* 2. Trends / Charts */}
-            <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[280px]">
-                <div className="col-span-2 bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+            <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[320px]">
+                <div className="h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
                      <SparklineChart 
                         label="Heart Rate vs Steps (Last 24h)" 
                         data={heartRateData} 
@@ -184,7 +184,7 @@ export default function DashboardPage() {
                         color="var(--primary)" 
                     />
                 </div>
-                <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+                <div className="h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
                     <SparklineChart 
                         label="SpO2 Trend" 
                         data={spo2Data} 

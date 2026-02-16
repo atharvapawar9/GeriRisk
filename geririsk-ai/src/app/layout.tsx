@@ -19,6 +19,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  
   title: "GeriRisk AI",
   description: "Geriatric Risk Assessment AI",
 };
