@@ -40,10 +40,7 @@ export default function AlertPanel({ alerts }: { alerts: Alert[] }) {
       </div>
 
       <div className="mt-8 pt-6 border-t border-border space-y-3">
-        <button className="w-full bg-primary text-primary-foreground text-sm font-medium py-3 rounded-lg hover:opacity-90 transition-opacity shadow-sm">
-            Download Risk Report
-            <span className="block text-xs font-normal opacity-80">(CSV / PDF)</span>
-        </button>
+        {/* Alerts panel footer actions can go here */}
       </div>
     </div>
   );
