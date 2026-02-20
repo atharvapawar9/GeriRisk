@@ -41,9 +41,6 @@ export function parseCSVString<T = Record<string, unknown>>(
   };
 }
 
-/**
- * Validate CSV structure against required columns
- */
 export function validateCSVStructure(
   data: Record<string, unknown>[],
   requiredColumns: string[]
