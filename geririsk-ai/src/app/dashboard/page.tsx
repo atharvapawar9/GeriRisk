@@ -7,8 +7,10 @@ import SparklineChart from "@/components/SparklineChart";
 import AlertPanel from "@/components/AlertPanel";
 import SleepTimeline from "@/components/SleepTimeline";
 import DataTable from "@/components/DataTable";
+import MetricCard from "@/components/MetricCard";
+import ActivityRing from "@/components/ActivityRing";
 import { ProcessResponse } from "@/lib/api";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Heart, Activity, Footprints, Droplets } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -139,14 +141,21 @@ export default function DashboardPage() {
         
         {/* LEFT COLUMN - MAIN DASHBOARD */}
         <div className="col-span-12 lg:col-span-9 space-y-12">
-            
+            {/* 0. Key Vitals Banner */}
+            <motion.div variants={item} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <MetricCard title="Avg Heart Rate" value={Math.round(data?.aggregates?.avgHeartRate || 0)} unit="bpm" icon={<Heart className="h-5 w-5" />} />
+              <MetricCard title="Min SpO2" value={Math.round(data?.aggregates?.minSpO2 || 0)} unit="%" icon={<Droplets className="h-5 w-5" />} />
+              <MetricCard title="Total Steps" value={Math.round(data?.aggregates?.totalSteps || 0)} unit="steps" icon={<Footprints className="h-5 w-5" />} />
+              <MetricCard title="Cardiac Events" value={data?.aggregates?.cardiacEvents || 0} unit="events" icon={<Activity className="h-5 w-5" />} />
+            </motion.div>
+
             {/* 1. Risk Summary Cards */}
             <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
                   <RiskCard 
                       type="cardiac" 
                       label="Cardiac Stress" 
-                      score={Math.round(data?.predictions?.cardiacRisk?.score * 100) || 78} 
+                      score={Math.round(Number(data?.predictions?.cardiacRisk?.score) * 100) || 0} 
                       level={cardiacLevel} 
                       events={data?.aggregates?.cardiacEvents || 0}
                       subtext={(data?.aggregates?.cardiacEvents || 0) > 0 ? "High HR spikes detected" : "Heart rate within normal range"}
@@ -156,7 +165,7 @@ export default function DashboardPage() {
                   <RiskCard 
                       type="fall" 
                       label="Fall Risk" 
-                      score={Math.round(data?.predictions?.fallRisk?.score * 100) || 12} 
+                      score={Math.round(Number(data?.predictions?.fallRisk?.score) * 100) || 0} 
                       level={fallLevel} 
                       events={0}
                       subtext={fallLevel === 'High' ? "Gait irregularity detected" : "Stability within normal range"}
@@ -166,7 +175,7 @@ export default function DashboardPage() {
                   <RiskCard 
                       type="respiratory" 
                       label="Respiratory / SpO2" 
-                      score={Math.round(data?.predictions?.respiratoryRisk?.score * 100) || 85} 
+                      score={Math.round(Number(data?.predictions?.respiratoryRisk?.score) * 100) || 0} 
                       level={respLevel} 
                       events={data?.aggregates?.spo2Events || 0}
                       subtext={(data?.aggregates?.spo2Events || 0) > 0 ? "SpO2 dips during sleep" : "Oxygen levels stable"}
@@ -175,28 +184,33 @@ export default function DashboardPage() {
             </motion.div>
 
             {/* 2. Trends / Charts */}
-            <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[320px]">
-                <div className="h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
-                     <SparklineChart 
-                        label="Heart Rate vs Steps (Last 24h)" 
-                        data={heartRateData} 
-                        dataKey="value" 
-                        color="var(--primary)" 
-                    />
+            <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[320px]">
+                <div className="h-full">
+                  <ActivityRing steps={data?.aggregates?.totalSteps || 0} goal={5000} />
                 </div>
-                <div className="h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
-                    <SparklineChart 
-                        label="SpO2 Trend" 
-                        data={spo2Data} 
-                        dataKey="value" 
-                        color="var(--primary)" 
-                    />
+                <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+                  <div className="h-[320px] lg:h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+                       <SparklineChart 
+                          label="Heart Rate vs Steps (Last 24h)" 
+                          data={heartRateData} 
+                          dataKey="value" 
+                          color="var(--primary)" 
+                      />
+                  </div>
+                  <div className="h-[320px] lg:h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+                      <SparklineChart 
+                          label="SpO2 Trend" 
+                          data={spo2Data} 
+                          dataKey="value" 
+                          color="var(--primary)" 
+                      />
+                  </div>
                 </div>
             </motion.div>
 
-            {/* 3. Sleep Timeline */}
-            <motion.div variants={item}>
-              <SleepTimeline data={data?.aggregates?.sleepBreakdown} />
+            {/* 3. Sleep Section */}
+            <motion.div variants={item} className="w-full">
+                <SleepTimeline data={data?.aggregates?.sleepBreakdown} />
             </motion.div>
             
              {/* 4. Data Table */}

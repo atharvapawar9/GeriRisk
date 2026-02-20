@@ -1,24 +1,20 @@
 export default function SleepTimeline({ data }: { data?: Record<string, number> }) {
   
-  // Default fallback if no data
-  const defaultStages = [
-    { type: 'awake', width: '15%', color: 'bg-[#E0E0FF]', label: 'Awake' }, 
-    { type: 'light', width: '35%', color: 'bg-[#8C8CFF]', label: 'Light' }, 
-    { type: 'deep', width: '30%', color: 'bg-[#0000C9]', label: 'Deep' },   
-    { type: 'rem', width: '20%', color: 'bg-[#5353FF]', label: 'REM' },     
-  ];
-
-  // Map real data to stages if available
-  let stages = defaultStages;
-
-  if (data && Object.keys(data).length > 0) {
-      stages = [
-          { type: 'awake', width: `${data.awake || 0}%`, color: 'bg-[#E0E0FF]', label: 'Awake' },
-          { type: 'light', width: `${data.light || 0}%`, color: 'bg-[#8C8CFF]', label: 'Light' },
-          { type: 'deep', width: `${data.deep || 0}%`, color: 'bg-[#0000C9]', label: 'Deep' },
-          { type: 'rem', width: `${data.rem || 0}%`, color: 'bg-[#5353FF]', label: 'REM' },
-      ].filter(s => parseFloat(s.width) > 0);
+  if (!data || Object.keys(data).length === 0) {
+    return (
+      <div className="bg-card/60 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-sm min-h-[160px] flex items-center justify-center">
+        <p className="text-muted-foreground text-sm font-medium">No sleep data available for this timeframe.</p>
+      </div>
+    );
   }
+
+  // Map real data to stages
+  const stages = [
+      { type: 'awake', width: `${data.awake || 0}%`, color: 'bg-[#E0E0FF]', label: 'Awake' },
+      { type: 'light', width: `${data.light || 0}%`, color: 'bg-[#8C8CFF]', label: 'Light' },
+      { type: 'deep', width: `${data.deep || 0}%`, color: 'bg-[#0000C9]', label: 'Deep' },
+      { type: 'rem', width: `${data.rem || 0}%`, color: 'bg-[#5353FF]', label: 'REM' },
+  ].filter(s => parseFloat(s.width) > 0);
 
   return (
     <div className="bg-card/60 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-sm">
