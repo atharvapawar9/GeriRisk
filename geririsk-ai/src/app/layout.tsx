@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   
   title: "GeriRisk AI",
   description: "Geriatric Risk Assessment AI",
+  icons: {
+    icon: "/GERIRISK MAIN-SVG.svg",
+  },
 };
 
 export default function RootLayout({

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Activity, ShieldCheck, Wind } from "lucide-react";
+import { Activity, ShieldCheck, Wind } from "lucide-react";
 
 export default function Home() {
   const container = {
@@ -26,7 +26,7 @@ export default function Home() {
       
       {/* HEADER */}
       <motion.header 
-        className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100"
+        className="w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -59,9 +59,14 @@ export default function Home() {
       </motion.header>
 
       {/* HERO SECTION */}
-      <section className="pt-32 pb-20 px-6 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [bg-size:20px_20px] bg-gray-50/50">
+      <section className="relative pt-32 pb-20 px-6 min-h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [bg-size:20px_20px]">
+        </div>
+
+        {/* Foreground Layer: Text Content */}
         <motion.div 
-          className="max-w-4xl mx-auto text-center"
+          className="relative z-10 max-w-4xl mx-auto text-center bg-white/40 backdrop-blur-sm p-8 rounded-3xl"
           variants={container}
           initial="hidden"
           animate="show"
@@ -91,10 +96,8 @@ export default function Home() {
                 className="group flex items-center justify-center gap-2 bg-[#0000c9] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg shadow-blue-900/10 hover:shadow-blue-900/20 transition-all"
               >
                 Upload Wearable CSV
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </Link>
-
           </motion.div>
         </motion.div>
       </section>
@@ -211,8 +214,16 @@ export default function Home() {
                         <div className="h-8 w-full bg-white/5 rounded-lg"></div>
                     </div>
                 </div>
-                {/* Decorative blob */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-600/20 blur-3xl -z-10 rounded-full"></div>
+                {/* GeriRisk Logo */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-10">
+                  <Image
+                    src="/GERIRISK MAIN-SVG.svg"
+                    alt="GeriRisk"
+                    width={300}
+                    height={300}
+                    className="w-[300px] h-auto"
+                  />
+                </div>
              </motion.div>
           </div>
         </div>
