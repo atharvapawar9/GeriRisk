@@ -7,7 +7,7 @@ interface SleepDistributionProps {
 export default function SleepDistribution({ breakdown }: SleepDistributionProps) {
   if (!breakdown || Object.keys(breakdown).length === 0) {
     return (
-      <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6 w-full h-full min-h-[160px] flex items-center justify-center">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 w-full h-full min-h-[160px] flex items-center justify-center">
         <p className="text-muted-foreground text-sm">No sleep stage data available.</p>
       </div>
     );
@@ -31,7 +31,7 @@ export default function SleepDistribution({ breakdown }: SleepDistributionProps)
     }));
 
   return (
-    <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6 flex flex-col w-full h-full min-h-[160px]">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 flex flex-col w-full h-full min-h-[160px]">
       <h3 className="text-sm font-medium text-muted-foreground mb-4">Sleep Breakdown</h3>
       
       {/* Stacked Progress Bar */}

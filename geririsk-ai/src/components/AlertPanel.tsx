@@ -9,7 +9,7 @@ interface Alert {
 
 export default function AlertPanel({ alerts }: { alerts: Alert[] }) {
   return (
-    <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 p-6 h-full shadow-sm">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 h-full transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
       <h3 className="font-semibold text-foreground mb-6">Alerts</h3>
       
 

@@ -10,7 +10,7 @@ export default function ActivityRing({ steps, goal }: ActivityRingProps) {
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6 flex flex-col items-center justify-center relative w-full h-full min-h-[160px]">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 flex flex-col items-center justify-center relative w-full h-full min-h-[160px] transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
       <div className="absolute top-4 left-4">
         <h3 className="text-sm font-medium text-muted-foreground">Daily Activity</h3>
       </div>

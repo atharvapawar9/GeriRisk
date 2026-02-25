@@ -2,7 +2,7 @@ export default function SleepTimeline({ data }: { data?: Record<string, number> 
   
   if (!data || Object.keys(data).length === 0) {
     return (
-      <div className="bg-card/60 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-sm min-h-[160px] flex items-center justify-center">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 min-h-[160px] flex items-center justify-center">
         <p className="text-muted-foreground text-sm font-medium">No sleep data available for this timeframe.</p>
       </div>
     );
@@ -17,7 +17,7 @@ export default function SleepTimeline({ data }: { data?: Record<string, number> 
   ].filter(s => parseFloat(s.width) > 0);
 
   return (
-    <div className="bg-card/60 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-sm">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
       <h3 className="text-lg font-bold text-foreground mb-4">Sleep Timeline</h3>
       
       <div className="relative pt-6 pb-2">

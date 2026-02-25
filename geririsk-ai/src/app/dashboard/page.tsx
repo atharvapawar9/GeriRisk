@@ -189,7 +189,7 @@ export default function DashboardPage() {
                   <ActivityRing steps={data?.aggregates?.totalSteps || 0} goal={5000} />
                 </div>
                 <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
-                  <div className="h-[320px] lg:h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+                  <div className="h-[320px] lg:h-full bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
                        <SparklineChart 
                           label="Heart Rate vs Steps (Last 24h)" 
                           data={heartRateData} 
@@ -197,7 +197,7 @@ export default function DashboardPage() {
                           color="var(--primary)" 
                       />
                   </div>
-                  <div className="h-[320px] lg:h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
+                  <div className="h-[320px] lg:h-full bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
                       <SparklineChart 
                           label="SpO2 Trend" 
                           data={spo2Data} 

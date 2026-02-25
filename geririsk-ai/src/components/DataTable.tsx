@@ -38,13 +38,13 @@ export default function DataTable({ data }: { data: ProcessResponse }) {
   ];
 
   return (
-    <div className="bg-white/5 backdrop-blur-md rounded-lg border border-white/10 overflow-hidden">
-        <div className="px-6 py-4 border-b border-white/10 bg-white/5">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100">
             <h3 className="font-semibold text-foreground">Detailed Metrics</h3>
         </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
         {rows.map((row, idx) => (
-          <div key={idx} className="bg-white/10 rounded-lg py-8 px-6 flex flex-col items-start justify-center text-left space-y-4 hover:bg-white/15 transition-all duration-300 border border-white/10 shadow-xl hover:shadow-2xl hover:-translate-y-1">
+          <div key={idx} className="bg-gray-50/60 rounded-xl py-8 px-6 flex flex-col items-start justify-center text-left space-y-4 hover:bg-gray-50 transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5">
             <span className="text-sm font-medium text-muted-foreground">{row.label}</span>
             <span className="text-3xl font-bold text-foreground tracking-tight">{row.value}</span>
             <span className={`px-3 py-1.5 rounded-full text-xs font-bold 
