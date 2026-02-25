@@ -186,7 +186,7 @@ export default function DashboardPage() {
             {/* 2. Trends / Charts */}
             <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[320px]">
                 <div className="h-full">
-                  <ActivityRing steps={data?.aggregates?.totalSteps || 0} goal={5000} />
+                  <ActivityRing steps={data?.aggregates?.totalSteps || 0} goal={1000} />
                 </div>
                 <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
                   <div className="h-[320px] lg:h-full bg-card/60 backdrop-blur-md rounded-lg border border-white/20 shadow-sm p-6">
