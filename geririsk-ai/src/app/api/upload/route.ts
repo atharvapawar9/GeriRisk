@@ -27,28 +27,32 @@ export async function POST(req: Request) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
 
-    // Upload to Supabase Storage
-    const { error: uploadError } = await supabase.storage
-      .from("wearable-uploads")
-      .upload(filePath, buffer, {
-        contentType: "text/csv",
-        upsert: true,
-      });
+    // Upload to Supabase Storage (non-blocking — continue even if Supabase is unreachable)
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from("wearable-uploads")
+        .upload(filePath, buffer, {
+          contentType: "text/csv",
+          upsert: true,
+        });
 
-    if (uploadError) {
-      return NextResponse.json({ error: uploadError.message }, { status: 500 });
-    }
+      if (uploadError) {
+        console.warn("Supabase storage upload failed (non-fatal):", uploadError.message);
+      }
 
-    // Save metadata to DB table
-    const { error: dbError } = await supabase.from("uploads").insert([
-      {
-        file_name: file.name,
-        file_path: filePath,
-      },
-    ]);
+      // Save metadata to DB table
+      const { error: dbError } = await supabase.from("uploads").insert([
+        {
+          file_name: file.name,
+          file_path: filePath,
+        },
+      ]);
 
-    if (dbError) {
-      return NextResponse.json({ error: dbError.message }, { status: 500 });
+      if (dbError) {
+        console.warn("Supabase DB insert failed (non-fatal):", dbError.message);
+      }
+    } catch (supabaseErr) {
+      console.warn("Supabase is unreachable, skipping cloud storage:", supabaseErr);
     }
 
     // ========== PROCESS THE FILE ==========

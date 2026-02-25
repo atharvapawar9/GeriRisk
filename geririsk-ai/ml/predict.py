@@ -25,14 +25,29 @@ def risk_level(score):
 
 
 def predict(features):
+    def safe_get(key, default=0):
+        """Return a valid float for the feature, or default if missing/NaN."""
+        val = features.get(key, default)
+        if val is None:
+            return float(default)
+        try:
+            val = float(val)
+            if np.isnan(val):
+                return float(default)
+            return val
+        except (ValueError, TypeError):
+            return float(default)
+
+    avgHR = safe_get("avgHeartRate", 72)
+    maxHR = safe_get("maxHeartRate", 100)
+    minHR = safe_get("minHeartRate", 55)
+    minSpO2 = safe_get("minSpO2", 95)
+    totalSteps = safe_get("totalSteps", 0)
+    recordCount = safe_get("recordCount", 1)
+
     # Cardiac
     cardiac_X = np.array([[ 
-        features["avgHeartRate"],
-        features["maxHeartRate"],
-        features["minHeartRate"],
-        features["minSpO2"],
-        features["totalSteps"],
-        features["recordCount"]
+        avgHR, maxHR, minHR, minSpO2, totalSteps, recordCount
     ]])
     cardiac_prob = cardiac_model.predict_proba(
         cardiac_scaler.transform(cardiac_X)
@@ -40,9 +55,7 @@ def predict(features):
 
     # Fall
     fall_X = np.array([[
-        features["avgHeartRate"],
-        features["totalSteps"],
-        features["recordCount"]
+        avgHR, totalSteps, recordCount
     ]])
     fall_prob = fall_model.predict_proba(
         fall_scaler.transform(fall_X)
@@ -50,9 +63,7 @@ def predict(features):
 
     # Respiratory
     resp_X = np.array([[
-        features["minSpO2"],
-        features["avgHeartRate"],
-        features["recordCount"]
+        minSpO2, avgHR, recordCount
     ]])
     resp_prob = resp_model.predict_proba(
         resp_scaler.transform(resp_X)
