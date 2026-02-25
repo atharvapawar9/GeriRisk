@@ -188,14 +188,12 @@
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--background);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(var(--primary), 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(var(--accent), 0.05) 0px, transparent 50%),
-    radial-gradient(var(--border) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 24px 24px;
-  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans);
   letter-spacing: var(--tracking-normal);
