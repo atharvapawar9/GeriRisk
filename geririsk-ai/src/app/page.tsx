@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Activity,
   ShieldCheck,
@@ -50,7 +50,7 @@ const NAV_LINKS = [
 
 const TRUST_ITEMS = [
   { icon: Brain, label: "AI Analytics" },
-  { icon: Activity, label: "Real-Time Monitoring" },
+  { icon: Activity, label: "Precise Monitoring" },
   { icon: HeartPulse, label: "Clinical Insights" },
   { icon: Lock, label: "Secure Data" },
 ];
@@ -157,6 +157,15 @@ const FAQS = [
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  /* scroll-linked zoom for the hero dashboard image */
+  const heroImgRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroImgRef,
+    offset: ["start end", "end start"],   // track from entering to leaving viewport
+  });
+  // scale: 1 → 1.05 at midpoint → back to 1
+  const heroImgScale = useTransform(heroScroll, [0, 0.5, 1], [1, 1.25, 1]);
+
   return (
     <main className="min-h-screen bg-white font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
       {/* ───────────── NAVBAR ───────────── */}
@@ -229,9 +238,9 @@ export default function Home() {
             custom={1}
             className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight mb-6"
           >
-            Predict Cardiac Risk
+            Predict Vital Risks
             <br />
-            <span className="text-[#a8bcff]">Before It Happens</span>
+            <span className="text-[#a8bcff]">Before They Even Happen</span>
           </motion.h1>
 
           <motion.p
@@ -241,7 +250,7 @@ export default function Home() {
           >
             AI-powered monitoring for elderly patients using wearable health
             data. Detect anomalies, prevent emergencies, and support clinical
-            decisions—all from one dashboard.
+            decisions all from one dashboard.
           </motion.p>
 
           <motion.div
@@ -264,20 +273,25 @@ export default function Home() {
 
           {/* floating dashboard card */}
           <motion.div
+            ref={heroImgRef}
             variants={fadeUp}
             custom={4}
             className="relative max-w-5xl mx-auto"
           >
-            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 bg-white">
+            <motion.div
+              style={{ scale: heroImgScale }}
+              className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 bg-white will-change-transform"
+            >
               <Image
                 src="/Dashboard M.png"
                 alt="GeriRisk Dashboard Preview"
-                width={1200}
-                height={680}
+                width={1920}
+                height={1080}
+                unoptimized
                 className="w-full h-auto"
                 priority
               />
-            </div>
+            </motion.div>
             {/* glow underneath */}
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-[#a8bcff]/20 blur-3xl rounded-full" />
           </motion.div>
