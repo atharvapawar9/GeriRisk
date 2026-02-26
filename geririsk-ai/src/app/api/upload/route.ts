@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
 
-    // Upload to Supabase Storage (non-blocking — continue even if Supabase is unreachable)
+    // Upload to Supabase Storage (graceful — skip if Supabase is unreachable)
     try {
       const { error: uploadError } = await supabase.storage
         .from("wearable-uploads")
@@ -37,22 +37,22 @@ export async function POST(req: Request) {
         });
 
       if (uploadError) {
-        console.warn("Supabase storage upload failed (non-fatal):", uploadError.message);
-      }
+        console.warn("Supabase storage upload warning:", uploadError.message);
+      } else {
+        // Save metadata to DB table only if storage upload succeeded
+        const { error: dbError } = await supabase.from("uploads").insert([
+          {
+            file_name: file.name,
+            file_path: filePath,
+          },
+        ]);
 
-      // Save metadata to DB table
-      const { error: dbError } = await supabase.from("uploads").insert([
-        {
-          file_name: file.name,
-          file_path: filePath,
-        },
-      ]);
-
-      if (dbError) {
-        console.warn("Supabase DB insert failed (non-fatal):", dbError.message);
+        if (dbError) {
+          console.warn("Supabase DB insert warning:", dbError.message);
+        }
       }
-    } catch (supabaseErr) {
-      console.warn("Supabase is unreachable, skipping cloud storage:", supabaseErr);
+    } catch (supabaseError) {
+      console.warn("Supabase unavailable, processing file locally:", supabaseError);
     }
 
     // ========== PROCESS THE FILE ==========
