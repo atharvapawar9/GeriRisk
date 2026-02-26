@@ -8,6 +8,7 @@ export default function ActivityRing({ steps, goal }: ActivityRingProps) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const caloriesBurned = Math.round(steps * 0.04);
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6 flex flex-col items-center justify-center relative w-full h-full min-h-[160px] transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
@@ -52,8 +53,13 @@ export default function ActivityRing({ steps, goal }: ActivityRingProps) {
         </div>
       </div>
 
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center space-y-1">
         <span className="text-sm font-medium text-foreground">{percentage}% of Daily Goal</span>
+        <div className="flex items-center justify-center gap-1">
+          
+          <span className="text-sm font-semibold text-orange-500">{caloriesBurned.toLocaleString()} cal</span>
+          <span className="text-xs text-muted-foreground">burned</span>
+        </div>
       </div>
     </div>
   );
