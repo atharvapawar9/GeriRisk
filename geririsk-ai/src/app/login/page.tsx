@@ -98,7 +98,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 className="w-full rounded-lg border border-border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
-                defaultValue="password"
+
               />
             </motion.div>
 
