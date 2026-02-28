@@ -1,6 +1,7 @@
 <div align="center">
 
-# <img src="greririsk-ai/public/GERIRISK MAIN-SVG.svg" alt="Alt text" width="300" height="200">
+# <<img src="public/GERIRISK%20WT-SVG.svg" alt="Geririsk White Logo" width="300">
+
  GeriRisk
 
 **AI-Powered Health Risk Prediction for Elderly Care**
