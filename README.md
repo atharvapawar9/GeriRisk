@@ -1,6 +1,6 @@
 <div align="center">
 
-# <<img src="public/GERIRISK%20WT-SVG.svg" alt="Geririsk White Logo" width="300">
+# <img src="public/GERIRISK%20WT-SVG.svg" alt="Geririsk White Logo" width="300">
 
  GeriRisk
 
