@@ -2,7 +2,7 @@
 
 # <img src="geririsk-ai/public/GERIRISK WT-SVG.svg" alt="Geririsk White Logo" width="300">
 
- GeriRisk
+
 
 **AI-Powered Health Risk Prediction for Elderly Care**
 
