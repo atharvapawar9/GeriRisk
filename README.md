@@ -1,6 +1,7 @@
 <div align="center">
 
-# 🩺 GeriRisk
+# <img src="greririsk-ai/public/GERIRISK MAIN-SVG.svg" alt="Alt text" width="300" height="200">
+ GeriRisk
 
 **AI-Powered Health Risk Prediction for Elderly Care**
 
