@@ -12,6 +12,7 @@ import ActivityRing from "@/components/ActivityRing";
 import { ProcessResponse } from "@/lib/api";
 import { RefreshCw, Heart, Activity, Footprints, Droplets } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function DashboardPage() {
@@ -96,7 +97,7 @@ export default function DashboardPage() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3 cursor-pointer">
              <Image 
                src="/GERIRISK WT-SVG.svg" 
                alt="GeriRisk Logo" 
@@ -105,7 +106,7 @@ export default function DashboardPage() {
                className="h-10 w-auto"
                priority
              />
-        </div>
+        </Link>
         <motion.button 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
