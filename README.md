@@ -39,7 +39,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -71,7 +71,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 ---
 
-##  Architecture
+## Architecture
 
 
 <img src="geririsk-ai/public/SystArct.png" alt="Geririsk System Architecture">
@@ -130,7 +130,7 @@ GeriRisk/
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -182,7 +182,7 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 ---
 
-## 🔌 API Reference
+## API Reference
 
 ### `POST /api/upload`
 
@@ -224,7 +224,7 @@ Run ML inference on preprocessed feature data.
 ---
 
 
-## 📄 License
+## License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more information.
 
