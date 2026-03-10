@@ -20,7 +20,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 <br />
 
-[Features](#features) · [Tech Stack](#-tech-stack) · [Architecture](#️-architecture) · [License](#-license)
+[Features](#features) · [Tech Stack](#tech-stack) · [Architecture](#️architecture) · [License](#license) · [Getting Started](#getting-started)
 
 </div>
 
@@ -39,7 +39,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 ---
 
-##   Tech Stack
+## Tech Stack
 
 ### Frontend
 
