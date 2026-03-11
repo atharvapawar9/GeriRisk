@@ -39,6 +39,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **Responsive UI**       | Glassmorphic design built with Tailwind CSS 4 and Framer Motion animations                          |
 
 </p>
+
 ---
 
 ## Tech Stack
