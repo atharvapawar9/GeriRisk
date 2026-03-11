@@ -45,7 +45,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 ## Tech Stack
 
 ### Frontend
-<div align="center">
+<p align="center">
 | Technology         | Purpose                                      |
 | ------------------ | -------------------------------------------- |
 | **Next.js 16**     | React framework with App Router & API routes |
@@ -55,7 +55,8 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **Framer Motion**  | Smooth animations & transitions              |
 | **Recharts**       | Data visualization (sparklines, charts)      |
 | **Lucide React**   | Icon system                                  |
-</div>
+
+</p>
 
 ### Backend & ML
 
