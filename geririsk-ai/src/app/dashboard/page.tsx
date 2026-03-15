@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import RiskCard from "@/components/RiskCard";
 import SparklineChart from "@/components/SparklineChart";
 import AlertPanel from "@/components/AlertPanel";
+import BookAppointment from "@/components/BookAppointment";
 import SleepTimeline from "@/components/SleepTimeline";
 import DataTable from "@/components/DataTable";
 import MetricCard from "@/components/MetricCard";
@@ -221,9 +222,12 @@ export default function DashboardPage() {
 
         </div>
 
-        {/* RIGHT COLUMN - ALERTS */}
+        {/* RIGHT COLUMN - ALERTS + APPOINTMENTS */}
         <motion.div variants={item} className="col-span-12 lg:col-span-3">
+          <div className="lg:sticky lg:top-24 space-y-6">
              <AlertPanel alerts={alerts} />
+             <BookAppointment />
+          </div>
         </motion.div>
 
       </motion.main>

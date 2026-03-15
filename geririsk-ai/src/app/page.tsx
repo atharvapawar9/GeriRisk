@@ -509,8 +509,8 @@ export default function Home() {
                   {s.desc}
                 </p>
                 {i < STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 text-gray-200">
-                    <ArrowRight className="h-6 w-6" />
+                  <div className="hidden md:flex absolute top-23 -right-[15px] z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 text-gray-300">
+                    <ArrowRight className="h-5 w-5" />
                   </div>
                 )}
               </motion.div>
