@@ -20,13 +20,14 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 <br />
 
-[Getting Started](#-getting-started) · [Features](#-features) · [Tech Stack](#-tech-stack) · [Architecture](#️-architecture) · [License](#-license)
+[Features](#features) · [Tech Stack](#tech-stack) · [Architecture](#architecture) · [Project Structure](#project-structure) · [Getting Started](#getting-started)· [API Reference](#api-reference) · [License](#license)
 
 </div>
 
 ---
 
-##  Features
+## Features
+<p align="center">
 
 | Category                | Highlights                                                                                          |
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
@@ -37,12 +38,13 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **Data Persistence**    | Supabase-backed storage for all uploaded health records                                             |
 | **Responsive UI**       | Glassmorphic design built with Tailwind CSS 4 and Framer Motion animations                          |
 
+</p>
+
 ---
 
-##  Tech Stack
+## Tech Stack
 
 ### Frontend
-
 | Technology         | Purpose                                      |
 | ------------------ | -------------------------------------------- |
 | **Next.js 16**     | React framework with App Router & API routes |
@@ -52,6 +54,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **Framer Motion**  | Smooth animations & transitions              |
 | **Recharts**       | Data visualization (sparklines, charts)      |
 | **Lucide React**   | Icon system                                  |
+
 
 ### Backend & ML
 
@@ -71,7 +74,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 ---
 
-##  Architecture
+## Architecture
 
 
 <img src="geririsk-ai/public/SystArct.png" alt="Geririsk System Architecture">
@@ -79,7 +82,7 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 GeriRisk/
@@ -130,7 +133,7 @@ GeriRisk/
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -182,7 +185,7 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 ---
 
-## 🔌 API Reference
+## API Reference
 
 ### `POST /api/upload`
 
@@ -224,7 +227,7 @@ Run ML inference on preprocessed feature data.
 ---
 
 
-## 📄 License
+## License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more information.
 
