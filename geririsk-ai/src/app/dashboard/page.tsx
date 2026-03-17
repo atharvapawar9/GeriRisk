@@ -11,6 +11,7 @@ import DataTable from "@/components/DataTable";
 import MetricCard from "@/components/MetricCard";
 import ActivityRing from "@/components/ActivityRing";
 import { ProcessResponse } from "@/lib/api";
+import { generateAlerts, generateSubtext } from "@/lib/generateAlerts";
 import { RefreshCw, Heart, Activity, Footprints, Droplets } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,17 +56,8 @@ export default function DashboardPage() {
   const heartRateData = data?.trends?.heartRate || [];
   const spo2Data = data?.trends?.spo2 || [];
 
-  // Generating alerts based on rules
-  const alerts = [];
-  if (data?.predictions?.cardiacRisk?.level === "High") {
-    alerts.push({ time: "10:45 PM", category: "Cardiac", message: "High HR spikes detected with low activity.", level: "Critical" });
-  }
-  if ((data?.aggregates?.minSpO2 ?? 100) < 92) {
-    alerts.push({ time: "3:20 AM", category: "SpO2", message: `SpO2 dipped to ${Math.round(data?.aggregates?.minSpO2)}% during sleep.`, level: "Critical" });
-  }
-  if (data?.predictions?.fallRisk?.level && data.predictions.fallRisk.level !== "Low") {
-    alerts.push({ time: "1:10 PM", category: "Fall Risk", message: "Gait irregularity detected.", level: "Warning" });
-  }
+  // Generate alerts using data-driven engine
+  const alerts = generateAlerts(data);
 
   // Fallback defaults if API is empty
   const cardiacLevel = data?.predictions?.cardiacRisk?.level || "Low";
@@ -160,7 +152,7 @@ export default function DashboardPage() {
                       score={Math.round(Number(data?.predictions?.cardiacRisk?.score) * 100) || 0} 
                       level={cardiacLevel} 
                       events={data?.aggregates?.cardiacEvents || 0}
-                      subtext={(data?.aggregates?.cardiacEvents || 0) > 0 ? "High HR spikes detected" : "Heart rate within normal range"}
+                      subtext={generateSubtext("cardiac", data)}
                   />
                 </motion.div>
                 <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
@@ -170,7 +162,7 @@ export default function DashboardPage() {
                       score={Math.round(Number(data?.predictions?.fallRisk?.score) * 100) || 0} 
                       level={fallLevel} 
                       events={0}
-                      subtext={fallLevel === 'High' ? "Gait irregularity detected" : "Stability within normal range"}
+                      subtext={generateSubtext("fall", data)}
                   />
                 </motion.div>
                 <motion.div className="h-full" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
@@ -180,7 +172,7 @@ export default function DashboardPage() {
                       score={Math.round(Number(data?.predictions?.respiratoryRisk?.score) * 100) || 0} 
                       level={respLevel} 
                       events={data?.aggregates?.spo2Events || 0}
-                      subtext={(data?.aggregates?.spo2Events || 0) > 0 ? "SpO2 dips during sleep" : "Oxygen levels stable"}
+                      subtext={generateSubtext("respiratory", data)}
                   />
                 </motion.div>
             </motion.div>
