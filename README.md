@@ -34,9 +34,10 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **ML Risk Prediction**  | Cardiac stress · Fall likelihood · Respiratory risk — each scored with High / Moderate / Low levels |
 | **CSV Upload Pipeline** | Drag-and-drop wearable data upload → preprocessing → feature extraction → ML inference              |
 | **Real-Time Dashboard** | Sparkline charts · Activity rings · Sleep timeline & distribution panels · Risk score cards         |
-| **Alerting System**     | Color-coded alert panel for abnormal vitals with severity-based prioritization                      |
+| **Intelligent Alerts**  | Data-driven alert engine with contextual clinical messages and severity-based prioritization        |
+| **Book Appointment**    | In-dashboard appointment scheduling with doctor availability based on selected dates               |
 | **Data Persistence**    | Supabase-backed storage for all uploaded health records                                             |
-| **Responsive UI**       | Glassmorphic design built with Tailwind CSS 4 and Framer Motion animations                          |
+| **Apple-Inspired UI**   | Clean, minimal design with Inter typography, smooth Framer Motion animations & glassmorphic cards    |
 
 </p>
 
@@ -45,18 +46,25 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 ## Tech Stack
 
 ### Frontend
+<div align="center">
+
 | Technology         | Purpose                                      |
 | ------------------ | -------------------------------------------- |
 | **Next.js 16**     | React framework with App Router & API routes |
 | **React 19**       | Component library with the React Compiler    |
 | **TypeScript 5**   | Type-safe development                        |
-| **Tailwind CSS 4** | Utility-first styling                        |
-| **Framer Motion**  | Smooth animations & transitions              |
+| **Tailwind CSS 4** | Utility-first styling with CSS variables      |
+| **Framer Motion**  | Smooth, Apple-like animations & transitions   |
 | **Recharts**       | Data visualization (sparklines, charts)      |
 | **Lucide React**   | Icon system                                  |
+| **Inter Font**     | Typography (via next/font/google)            |
+
+</div>
 
 
 ### Backend & ML
+
+<div align="center">
 
 | Technology             | Purpose                                                       |
 | ---------------------- | ------------------------------------------------------------- |
@@ -65,12 +73,18 @@ GeriRisk is a wearable-data health monitoring system designed for **senior care*
 | **scikit-learn**       | Pre-trained risk models (Random Forest / Logistic Regression) |
 | **NumPy & Joblib**     | Numerical computation & model serialization                   |
 
+</div>
+
 ### Infrastructure
+
+<div align="center">
 
 | Technology    | Purpose                              |
 | ------------- | ------------------------------------ |
 | **Supabase**  | PostgreSQL database + authentication |
 | **PapaParse** | Client-side CSV parsing              |
+
+</div>
 
 ---
 
@@ -110,10 +124,11 @@ GeriRisk/
 │   │   │   └── globals.css       # Global styles
 │   │   ├── components/
 │   │   │   ├── ActivityRing.tsx   # Circular progress rings
-│   │   │   ├── AlertPanel.tsx    # Risk alert notifications
-│   │   │   ├── DataTable.tsx     # Tabular data display
-│   │   │   ├── MetricCard.tsx    # KPI metric tiles
-│   │   │   ├── RiskCard.tsx      # Risk score display cards
+│   │   │   ├── AlertPanel.tsx     # Risk alert notifications
+│   │   │   ├── BookAppointment.tsx # Doctor appointment scheduler
+│   │   │   ├── DataTable.tsx      # Tabular data display
+│   │   │   ├── MetricCard.tsx     # KPI metric tiles
+│   │   │   ├── RiskCard.tsx       # Risk score display cards
 │   │   │   ├── SleepDistribution.tsx
 │   │   │   ├── SleepTimeline.tsx
 │   │   │   └── SparklineChart.tsx
@@ -121,6 +136,7 @@ GeriRisk/
 │   │       ├── api.ts            # Client-side API helpers
 │   │       ├── csvParser.ts      # CSV parsing utilities
 │   │       ├── features.ts       # Feature engineering logic
+│   │       ├── generateAlerts.ts # Intelligent alert generation engine
 │   │       ├── preprocess.ts     # Data preprocessing pipeline
 │   │       └── supabaseClient.ts # Supabase client singleton
 │   ├── package.json
@@ -137,12 +153,16 @@ GeriRisk/
 
 ### Prerequisites
 
+<div align="center">
+
 | Tool                 | Version                               |
 | -------------------- | ------------------------------------- |
 | **Node.js**          | ≥ 18.x                                |
 | **npm**              | ≥ 9.x                                 |
 | **Python**           | ≥ 3.10                                |
 | **Supabase Account** | [supabase.com](https://supabase.com/) |
+
+</div>
 
 ### 1. Clone the Repository
 
@@ -191,9 +211,13 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 Upload a CSV file containing wearable health data.
 
+<div align="center">
+
 | Parameter | Type       | Description                  |
 | --------- | ---------- | ---------------------------- |
 | `file`    | `FormData` | CSV file with health metrics |
+
+</div>
 
 ### `POST /api/process`
 
@@ -230,6 +254,18 @@ Run ML inference on preprocessed feature data.
 ## License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more information.
+
+---
+
+## Design Philosophy
+
+GeriRisk's frontend follows an **Apple-inspired** design language:
+
+- **Typography**: Inter font family (closest to SF Pro available via Google Fonts)
+- **Color Palette**: Deep brand blue `#0000c9` primary with `#a8bcff` accents, Apple's `#f5f5f7` warm gray for section backgrounds, `#1d1d1f` charcoal footer
+- **Corners & Shadows**: Large `1rem` border-radius with soft, diffused box-shadows
+- **Animations**: Smooth Framer Motion entrances with custom cubic-bezier easing curves
+- **Glass Effects**: Frosted-glass navbar with `backdrop-blur` and `backdrop-saturate`
 
 ---
 
