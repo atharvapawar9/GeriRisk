@@ -47,7 +47,7 @@ export default function DashboardPage() {
   if (loading || !data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f0f2f5]">
-        <div className="animate-spin h-8 w-8 border-4 border-blue-600 rounded-full border-t-transparent"></div>
+        <div className="animate-spin h-8 w-8 border-4 border-[#0000c9] rounded-full border-t-transparent"></div>
       </div>
     );
   }
@@ -81,7 +81,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen font-sans text-foreground pb-12">
+    <div className="min-h-screen font-sans text-foreground pb-12 bg-[#f5f5f7]">
       {/* Header */}
 
       <motion.header 
@@ -104,7 +104,7 @@ export default function DashboardPage() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push('/upload')}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
+           className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-xl text-sm font-medium transition-colors shadow-sm"
         >
           Upload CSV
         </motion.button>

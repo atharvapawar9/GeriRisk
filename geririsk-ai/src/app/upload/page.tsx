@@ -91,7 +91,7 @@ export default function UploadPage() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-                 <div className="border-l-4 border-primary pl-6 mb-12">
+                 <div className="border-l-2 border-primary pl-6 mb-12">
                     <h1 className="text-4xl font-light tracking-tight text-sidebar-foreground uppercase">
                         Data Import
                     </h1>
@@ -137,7 +137,7 @@ export default function UploadPage() {
             <section className="flex-1 p-8 md:p-12 lg:p-24 overflow-y-auto flex flex-col justify-center bg-background/60 backdrop-blur-sm">
                 <div className="max-w-2xl w-full mx-auto">
                      <motion.div 
-                       className="border border-border p-12 hover:border-primary transition-colors duration-300 shadow-sm hover:shadow-lg rounded-lg"
+                       className="border border-border p-12 hover:border-primary transition-colors duration-300 shadow-sm hover:shadow-lg rounded-2xl"
                        initial={{ scale: 0.95, opacity: 0 }}
                        animate={{ scale: 1, opacity: 1 }}
                        transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.3 }}
@@ -146,7 +146,7 @@ export default function UploadPage() {
                         {/* File Drop Area Visual */}
                         <motion.div 
                             onClick={() => fileInputRef.current?.click()}
-                            className="group cursor-pointer border-2 border-dashed border-border bg-muted/20 py-24 text-center hover:border-primary hover:bg-accent/10 transition-all duration-300 rounded-lg"
+                            className="group cursor-pointer border-2 border-dashed border-border bg-muted/20 py-24 text-center hover:border-primary hover:bg-accent/10 transition-all duration-300 rounded-2xl"
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                         >
@@ -239,7 +239,7 @@ export default function UploadPage() {
                             disabled={!file || status === "uploading"}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-10 py-4 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:opacity-90 disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground transition-all active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-accent/20 rounded-lg"
+                            className="px-10 py-4 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:opacity-90 disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground transition-all active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-accent/20 rounded-xl"
                             >
                             {status === "uploading" ? "Analyzing..." : "Analyze Data"}
                             </motion.button>

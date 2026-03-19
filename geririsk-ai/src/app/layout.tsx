@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Lora, IBM_Plex_Mono } from "next/font/google"; // Added IBM_Plex_Mono as it was in theme
+import { Inter, DM_Serif_Display, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const lora = Lora({
+const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-serif",
   subsets: ["latin"],
+  weight: "400",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -34,10 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${plusJakartaSans.variable} ${lora.variable} ${ibmPlexMono.variable} antialiased`}>
+      <body className={`${inter.variable} ${dmSerifDisplay.variable} ${ibmPlexMono.variable} antialiased`}>
         {children}
       </body>
     </html>
   );
 }
-

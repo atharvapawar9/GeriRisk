@@ -26,17 +26,17 @@ import {
 
 /* ───────────────────────── animation variants ───────────────────────── */
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 18 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const },
+    transition: { delay: i * 0.08, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
   }),
 };
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
 /* ───────────────────────── data ───────────────────────── */
@@ -167,10 +167,10 @@ export default function Home() {
   const heroImgScale = useTransform(heroScroll, [0, 0.5, 1], [1, 1.25, 1]);
 
   return (
-    <main className="min-h-screen bg-white font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+    <main className="min-h-screen bg-[#fbfbfd] font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
       {/* ───────────── NAVBAR ───────────── */}
       <motion.header
-        className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-white/5"
+        className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl backdrop-saturate-150 border-b border-gray-200/60"
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -196,7 +196,7 @@ export default function Home() {
             ))}
           </nav>
           <Link href="/login">
-            <button className="bg-[#0000c9] hover:bg-[#0000a0] text-white px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-lg cursor-pointer">
+            <button className="bg-[#0000c9] hover:bg-[#0000a0] text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-lg cursor-pointer">
               Sign In
             </button>
           </Link>
@@ -209,11 +209,11 @@ export default function Home() {
         className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, #0000c9 0%, #000080 40%, #0f172a 100%)",
+            "linear-gradient(135deg, #0000c9 0%, #000080 50%, #000060 100%)",
         }}
       >
         {/* subtle radial glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-[#a8bcff]/20 blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-[#a8bcff]/15 blur-[120px] pointer-events-none" />
 
         <motion.div
           className="relative z-10 max-w-4xl mx-auto text-center px-6"
@@ -259,7 +259,7 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/login">
-              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-3.5 rounded-full text-base font-semibold shadow-lg shadow-blue-900/30 hover:shadow-blue-900/40 transition-all cursor-pointer">
+              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all cursor-pointer">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -293,13 +293,13 @@ export default function Home() {
               />
             </motion.div>
             {/* glow underneath */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-[#a8bcff]/20 blur-3xl rounded-full" />
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-[#a8bcff]/15 blur-3xl rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
       {/* ═══════════════════ 2 · TRUST STRIP ═══════════════════ */}
-      <section className="py-12 bg-[#f8fafc] border-b border-gray-100">
+      <section className="py-12 bg-[#f5f5f7] border-b border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-8">
             Trusted for AI-powered health monitoring
@@ -384,7 +384,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════ 4 · FEATURES GRID ═══════════════════ */}
-      <section id="features" className="py-24 bg-[#f8fafc]">
+      <section id="features" className="py-24 bg-[#f5f5f7]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -413,9 +413,9 @@ export default function Home() {
                 key={f.title}
                 variants={fadeUp}
                 custom={i}
-                className="group bg-white rounded-2xl p-7 border border-gray-100 hover:border-[#0000c9]/30 shadow-sm hover:shadow-lg transition-all duration-300"
+                className="group bg-white rounded-2xl p-7 border border-gray-200/60 hover:border-[#0000c9]/30 shadow-sm hover:shadow-lg transition-all duration-300"
               >
-                <div className="h-12 w-12 rounded-xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center mb-5 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
+                <div className="h-12 w-12 rounded-2xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center mb-5 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
                   <f.icon className="h-6 w-6" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
@@ -468,7 +468,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════ 6 · HOW IT WORKS ═══════════════════ */}
-      <section id="how-it-works" className="py-24 bg-[#f8fafc]">
+      <section id="how-it-works" className="py-24 bg-[#f5f5f7]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -494,7 +494,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: i * 0.15, duration: 0.6 }}
-                className="relative bg-white rounded-2xl p-8 border border-gray-100 shadow-sm text-center group hover:shadow-lg transition-all duration-300"
+                className="relative bg-white rounded-2xl p-8 border border-gray-200/60 shadow-sm text-center group hover:shadow-lg transition-all duration-300"
               >
                 <div className="text-5xl font-black text-[#0000c9]/10 absolute top-4 right-6 select-none">
                   {s.num}
@@ -557,7 +557,7 @@ export default function Home() {
                     key={b.title}
                     className="flex items-start gap-4 group"
                   >
-                    <div className="h-10 w-10 rounded-xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center shrink-0 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
+                    <div className="h-10 w-10 rounded-2xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center shrink-0 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
                       <b.icon className="h-5 w-5" />
                     </div>
                     <div>
@@ -577,7 +577,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════ 8 · FAQ ═══════════════════ */}
-      <section id="faq" className="py-24 bg-[#f8fafc]">
+      <section id="faq" className="py-24 bg-[#f5f5f7]">
         <div className="max-w-3xl mx-auto px-6">
           <motion.div
             className="text-center mb-14"
@@ -642,7 +642,7 @@ export default function Home() {
             className="rounded-3xl p-12 md:p-16 text-center"
             style={{
               background:
-                "linear-gradient(135deg, #0000c9 0%, #000080 50%, #0f172a 100%)",
+                "linear-gradient(135deg, #0000c9 0%, #000080 50%, #000060 100%)",
             }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -657,7 +657,7 @@ export default function Home() {
               elderly patients. Get started in minutes.
             </p>
             <Link href="/login">
-              <button className="group inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-3.5 rounded-full text-base font-bold shadow-lg transition-all cursor-pointer">
+              <button className="group inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-3.5 rounded-full text-base font-semibold shadow-lg transition-all cursor-pointer">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -667,7 +667,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════ 10 · FOOTER ═══════════════════ */}
-      <footer className="bg-[#0f172a] text-gray-400 py-16 px-6">
+      <footer className="bg-[#1d1d1f] text-gray-400 py-16 px-6">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* brand */}
           <div>

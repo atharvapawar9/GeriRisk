@@ -19,14 +19,14 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background bg-[radial-gradient(var(--border)_1px,transparent_1px)] [bg-size:16px_16px]">
+    <main className="flex min-h-screen items-center justify-center bg-[#f5f5f7]">
       <motion.div 
         className="w-full max-w-md p-8"
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, duration: 0.5 }}
       >
-        <div className="relative overflow-hidden rounded-lg bg-card/70 backdrop-blur-xl shadow-lg border border-border p-8 sm:p-10">
+        <div className="relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-xl shadow-lg border border-gray-200/60 p-8 sm:p-10">
           
           <div className="mb-10 text-center">
             <motion.div 
@@ -77,7 +77,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="doctor@clinic.com"
-                className="w-full rounded-lg border border-border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
+                className="w-full rounded-xl border border-gray-200/60 bg-[#f5f5f7]/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
                 defaultValue="doctor@clinic.com"
               />
             </motion.div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 whileFocus={{ scale: 1.01 }}
                 id="password"
                 type="password"
-                className="w-full rounded-lg border border-border bg-background/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
+                className="w-full rounded-xl border border-gray-200/60 bg-[#f5f5f7]/50 px-4 py-3 text-sm text-foreground outline-none transition-all focus:ring-1 focus:ring-primary focus:border-primary"
 
               />
             </motion.div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="group relative w-full overflow-hidden rounded-lg bg-primary py-3 text-sm font-semibold text-primary-foreground transition-all disabled:opacity-70 shadow-sm"
+              className="group relative w-full overflow-hidden rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground transition-all disabled:opacity-70 shadow-sm"
             >
               <span className={`flex items-center justify-center gap-2 ${isLoading ? "invisible" : ""}`}>
                 Sign In
