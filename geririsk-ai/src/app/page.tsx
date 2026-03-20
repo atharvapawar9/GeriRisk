@@ -259,7 +259,7 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/login">
-              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all cursor-pointer">
+              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#7d7dff] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all cursor-pointer">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
