@@ -259,7 +259,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more infor
 
 ## Design Philosophy
 
-GeriRisk's frontend follows an **Apple-inspired** design language:
+GeriRisk's frontend follows an modern design language:
 
 - **Typography**: Inter font family (closest to SF Pro available via Google Fonts)
 - **Color Palette**: Deep brand blue `#0000c9` primary with `#a8bcff` accents, Apple's `#f5f5f7` warm gray for section backgrounds, `#1d1d1f` charcoal footer
