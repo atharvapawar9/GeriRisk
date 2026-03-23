@@ -374,8 +374,9 @@ export default function Home() {
               <Image
                 src="/Dashboard M.png"
                 alt="GeriRisk Dashboard"
-                width={800}
-                height={450}
+                width={1920}
+                height={1080}
+                unoptimized
                 className="w-full h-auto"
               />
             </motion.div>
@@ -459,8 +460,9 @@ export default function Home() {
             <Image
               src="/Dashboard M.png"
               alt="GeriRisk Dashboard Full View"
-              width={1200}
-              height={680}
+              width={1920}
+              height={1080}
+              unoptimized
               className="w-full h-auto"
             />
           </motion.div>
@@ -534,8 +536,9 @@ export default function Home() {
               <Image
                 src="/Dashboard M.png"
                 alt="GeriRisk Dashboard Benefits"
-                width={800}
-                height={450}
+                width={1920}
+                height={1080}
+                unoptimized
                 className="w-full h-auto"
               />
             </motion.div>
