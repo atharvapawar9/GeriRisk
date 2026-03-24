@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   HeartPulse,
   Brain,
-  BellRing,
+  CalendarCheck,
   LayoutDashboard,
   Watch,
   Droplets,
@@ -77,9 +77,9 @@ const FEATURES = [
     desc: "Visualize 24-hour heart rate curves against steps and activity to spot anomalies.",
   },
   {
-    icon: BellRing,
-    title: "AI Alerts",
-    desc: "Receive intelligent notifications when risk thresholds are breached with contextual explanations.",
+    icon: CalendarCheck,
+    title: "Book Appointments",
+    desc: "Seamlessly schedule consultations with specialists directly from the platform based on AI recommendations.",
   },
   {
     icon: LayoutDashboard,
@@ -170,33 +170,33 @@ export default function Home() {
     <main className="min-h-screen bg-[#fbfbfd] font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
       {/* ───────────── NAVBAR ───────────── */}
       <motion.header
-        className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl backdrop-saturate-150 border-b border-gray-200/60"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl bg-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100"
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <Image
             src="/GERIRISK WT-SVG.svg"
             alt="GeriRisk Logo"
             width={130}
             height={40}
-            className="h-8 w-auto"
+            className="h-7 md:h-8 w-auto"
             priority
           />
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[15px] font-bold text-black transition-all hover:bg-gray-100"
               >
                 {l.label}
               </a>
             ))}
           </nav>
           <Link href="/login">
-            <button className="bg-[#0000c9] hover:bg-[#0000a0] text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-lg cursor-pointer">
+            <button className="bg-[#0000c9] hover:bg-[#0000a0] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md cursor-pointer">
               Sign In
             </button>
           </Link>
