@@ -206,14 +206,10 @@ export default function Home() {
       {/* ═══════════════════ 1 · HERO ═══════════════════ */}
       <section
         id="home"
-        className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #1d4ed8 0%, #1e40af 50%, #1e3a8a 100%)",
-        }}
+        className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden bg-white"
       >
         {/* subtle radial glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-[#a8bcff]/15 blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-[#0000c9]/5 blur-[120px] pointer-events-none" />
 
         <motion.div
           className="relative z-10 max-w-4xl mx-auto text-center px-6"
@@ -224,11 +220,11 @@ export default function Home() {
           <motion.div
             variants={fadeUp}
             custom={0}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#a8bcff] text-xs font-semibold tracking-wide uppercase mb-8 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0000c9]/10 border border-[#0000c9]/20 text-[#0000c9] text-xs font-semibold tracking-wide uppercase mb-8 backdrop-blur-sm"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#a8bcff] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#a8bcff]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0000c9] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0000c9]" />
             </span>
             AI-Powered Health Monitoring
           </motion.div>
@@ -236,17 +232,17 @@ export default function Home() {
           <motion.h1
             variants={fadeUp}
             custom={1}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6"
           >
             Predict Vital Risks
             <br />
-            <span className="text-[#a8bcff]">Before They Even Happen</span>
+            <span className="text-[#0000c9]">Before They Even Happen</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             AI-powered monitoring for elderly patients using wearable health
             data. Detect anomalies, prevent emergencies, and support clinical
@@ -259,13 +255,13 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/login">
-              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#7d7dff] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-blue-900/20 hover:shadow-blue-900/30 transition-all cursor-pointer">
+              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-[#0000c9]/10 hover:shadow-[#0000c9]/20 transition-all cursor-pointer">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
             <a href="#dashboard">
-              <button className="flex items-center gap-2 bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white px-8 py-3.5 rounded-full text-base font-semibold border border-white/20 transition-all cursor-pointer">
+              <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-8 py-3.5 rounded-full text-base font-semibold border border-gray-200 transition-all cursor-pointer">
                 View Dashboard
               </button>
             </a>
@@ -280,7 +276,7 @@ export default function Home() {
           >
             <motion.div
               style={{ scale: heroImgScale }}
-              className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 bg-white will-change-transform"
+              className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-200 bg-white will-change-transform"
             >
               <Image
                 src="/Dashboard M.png"
