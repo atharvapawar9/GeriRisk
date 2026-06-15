@@ -204,7 +204,7 @@ export default function DashboardPage() {
 
             {/* 3. Sleep Section */}
             <motion.div variants={item} className="w-full">
-                <SleepTimeline data={data?.aggregates?.sleepBreakdown} />
+                <SleepTimeline sessions={data?.aggregates?.sleepSessions} />
             </motion.div>
             
              {/* 4. Data Table */}

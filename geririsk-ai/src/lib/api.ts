@@ -1,3 +1,5 @@
+import type { SleepSession } from '@/lib/features';
+
 export interface ProcessResponse {
   file: string;
   recordCount: number;
@@ -12,6 +14,7 @@ export interface ProcessResponse {
     cardiacEvents: number;
     spo2Events: number;
     sleepBreakdown?: Record<string, number>;
+    sleepSessions?: SleepSession[];
   };
   predictions: {
     cardiacRisk: { score: number; level: "High" | "Moderate" | "Low" };

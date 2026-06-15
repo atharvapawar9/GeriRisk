@@ -1,3 +1,24 @@
+// ─── Sleep session types ──────────────────────────────────────────────────────
+
+export type SleepStage = 'Awake' | 'REM' | 'Light' | 'Deep';
+
+export interface SleepSegment {
+  stage: SleepStage;
+  start_min: number;   // minutes from session start (origin = 0)
+  end_min: number;     // minutes from session start
+  start_ts: string;    // wall-clock "HH:MM"
+  end_ts: string;      // wall-clock "HH:MM"
+}
+
+export interface SleepSession {
+  date: string;               // e.g. "1/16/2026"
+  bedtime: string;            // "00:00"
+  wakeTime: string;           // "07:00"
+  totalMinutes: number;       // 420
+  segments: SleepSegment[];
+  breakdown: Record<string, number>; // percentages, same shape as existing sleepBreakdown
+}
+
 /**
  * Feature engineering utilities for GeriRisk data processing
  */
@@ -72,6 +93,7 @@ export interface DatasetAggregates {
   cardiacEvents: number;
   spo2Events: number;
   sleepBreakdown?: Record<string, number>;
+  sleepSessions?: SleepSession[];
 }
 
 /**
@@ -172,7 +194,123 @@ export function calculateDatasetAggregates(
     recordCount,
     cardiacEvents,
     spo2Events,
-    sleepBreakdown
+    sleepBreakdown,
+    sleepSessions: extractSleepSessions(data),
+  };
+}
+
+// ─── Sleep session extractor ──────────────────────────────────────────────────
+
+const SESSION_GAP_MINUTES = 240; // gaps longer than 4h of Awake = new session
+
+export function extractSleepSessions(
+  data: Record<string, unknown>[]
+): SleepSession[] {
+  if (!data || data.length === 0) return [];
+
+  // Detect column names (same logic as existing calculateDatasetAggregates)
+  const sleepStageCol =
+    Object.keys(data[0] || {}).find(
+      (k) =>
+        k.toLowerCase().includes('sleep') &&
+        (k.toLowerCase().includes('stage') || k.toLowerCase().includes('phase'))
+    ) || 'sleep_stage';
+
+  const tsCol = 'timestamp';
+
+  // Build raw (stage, timestamp) pairs
+  const rawRows = data
+    .filter((r) => typeof r[sleepStageCol] === 'string' && r[tsCol])
+    .map((r) => ({
+      stage: r[sleepStageCol] as string,
+      ts: new Date(r[tsCol] as string),
+    }));
+
+  if (rawRows.length === 0) return [];
+
+  // Run-length encode into blocks: [{stage, start, end}]
+  const blocks: { stage: string; start: Date; end: Date }[] = [];
+  let cur = { stage: rawRows[0].stage, start: rawRows[0].ts, end: rawRows[0].ts };
+
+  for (let i = 1; i < rawRows.length; i++) {
+    const r = rawRows[i];
+    if (r.stage === cur.stage) {
+      cur.end = r.ts;
+    } else {
+      blocks.push({ ...cur });
+      cur = { stage: r.stage, start: r.ts, end: r.ts };
+    }
+  }
+  blocks.push({ ...cur });
+
+  // Split blocks into sessions on long Awake gaps
+  const sessionGroups: (typeof blocks)[] = [];
+  let curGroup: typeof blocks = [];
+
+  for (let i = 0; i < blocks.length; i++) {
+    const b = blocks[i];
+    const durMin = (b.end.getTime() - b.start.getTime()) / 60000;
+
+    if (b.stage === 'Awake' && durMin > SESSION_GAP_MINUTES) {
+      // Long daytime Awake block — close current session, skip this block
+      if (curGroup.length > 0) {
+        sessionGroups.push(curGroup);
+        curGroup = [];
+      }
+    } else {
+      curGroup.push(b);
+    }
+  }
+  if (curGroup.length > 0) sessionGroups.push(curGroup);
+
+  // Build SleepSession objects from each group
+  return sessionGroups
+    .map((group) => buildSleepSession(group))
+    .filter((s) => s.totalMinutes > 30); // discard noise < 30min
+}
+
+function buildSleepSession(
+  blocks: { stage: string; start: Date; end: Date }[]
+): SleepSession {
+  const origin = blocks[0].start;
+  const lastEnd = blocks[blocks.length - 1].end;
+  // Add 5 min to last block end (CSV rows are 5-min intervals)
+  const totalMinutes =
+    Math.round((lastEnd.getTime() - origin.getTime()) / 60000) + 5;
+
+  const fmt = (d: Date) =>
+    d.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
+  const segments: SleepSegment[] = blocks.map((b) => ({
+    stage: b.stage as SleepStage,
+    start_min: Math.round((b.start.getTime() - origin.getTime()) / 60000),
+    end_min: Math.round((b.end.getTime() - origin.getTime()) / 60000) + 5,
+    start_ts: fmt(b.start),
+    end_ts: fmt(b.end),
+  }));
+
+  // Compute breakdown percentages from segment durations
+  const counts: Record<string, number> = {};
+  for (const s of segments) {
+    const key = s.stage.toLowerCase();
+    counts[key] = (counts[key] || 0) + (s.end_min - s.start_min);
+  }
+  const breakdown: Record<string, number> = {};
+  for (const [k, v] of Object.entries(counts)) {
+    breakdown[k] = Math.round((v / totalMinutes) * 100);
+  }
+
+  return {
+    date: origin.toLocaleDateString(),
+    bedtime: fmt(origin),
+    wakeTime: fmt(lastEnd),
+    totalMinutes,
+    segments,
+    breakdown,
   };
 }
 
