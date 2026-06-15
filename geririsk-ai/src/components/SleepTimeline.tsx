@@ -15,15 +15,15 @@ const STAGE_CONFIG: Record<
   string,
   { color: string; label: string; y: number; height: number }
 > = {
-  Awake: { color: "#F59E0B", label: "Awake", y: 2,  height: 10 },
-  REM:   { color: "#38BDF8", label: "REM",   y: 16, height: 12 },
-  Light: { color: "#60A5FA", label: "Light", y: 32, height: 14 },
-  Deep:  { color: "#1D4ED8", label: "Deep",  y: 50, height: 16 },
+  Awake: { color: "#F59E0B", label: "Awake", y: 0,  height: 10 },
+  REM:   { color: "#38BDF8", label: "REM",   y: 10, height: 12 },
+  Light: { color: "#60A5FA", label: "Light", y: 22, height: 14 },
+  Deep:  { color: "#1D4ED8", label: "Deep",  y: 36, height: 16 },
 };
 
 const LEGEND_ORDER = ["Awake", "REM", "Light", "Deep"];
 const SVG_W = 620;
-const SVG_H = 70;
+const SVG_H = 52;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -61,7 +61,7 @@ function SessionChart({ session }: { session: SleepSession }) {
   );
 
   return (
-    <div className="mb-6 last:mb-0">
+    <div className="mb-4 last:mb-0">
       {/* Session header */}
       <div className="flex items-baseline justify-between mb-2">
         <div className="flex items-center gap-3">
@@ -103,26 +103,53 @@ function SessionChart({ session }: { session: SleepSession }) {
         {session.segments.map((seg, i) => {
           const cfg = STAGE_CONFIG[seg.stage];
           if (!cfg) return null;
+          const next = session.segments[i + 1];
           const x = (seg.start_min / session.totalMinutes) * SVG_W;
+          const endMin = next ? next.start_min : session.totalMinutes;
           const w = Math.max(
-            ((seg.end_min - seg.start_min) / session.totalMinutes) * SVG_W,
+            ((endMin - seg.start_min) / session.totalMinutes) * SVG_W,
             1.5
           );
+
+          // Connector line at stage transition
+          const nextCfg = next ? STAGE_CONFIG[next.stage] : null;
+          const showConnector = next && nextCfg && next.stage !== seg.stage;
+          const connectorX = x + w;
+          const y1 = showConnector
+            ? cfg.y + cfg.height / 2
+            : 0;
+          const y2 = showConnector && nextCfg
+            ? nextCfg.y + nextCfg.height / 2
+            : 0;
+
           return (
-            <rect
-              key={i}
-              x={x}
-              y={cfg.y}
-              width={w}
-              height={cfg.height}
-              rx={2.5}
-              fill={cfg.color}
-              opacity={seg.stage === "Awake" ? 0.75 : 1}
-            >
-              <title>
-                {cfg.label}: {seg.start_ts}–{seg.end_ts}
-              </title>
-            </rect>
+            <g key={i}>
+              <rect
+                x={x}
+                y={cfg.y}
+                width={w}
+                height={cfg.height}
+                rx={1}
+                fill={cfg.color}
+                opacity={seg.stage === "Awake" ? 0.8 : 1}
+              >
+                <title>
+                  {cfg.label}: {seg.start_ts}–{seg.end_ts}
+                </title>
+              </rect>
+              {showConnector && (
+                <line
+                  x1={connectorX}
+                  y1={y1}
+                  x2={connectorX}
+                  y2={y2}
+                  stroke="#94A3B8"
+                  strokeWidth={1}
+                  strokeDasharray="2,2"
+                  opacity={0.5}
+                />
+              )}
+            </g>
           );
         })}
       </svg>
@@ -200,7 +227,7 @@ export default function SleepTimeline({ sessions }: SleepTimelineProps) {
       {/* One chart per session */}
       <div className="divide-y divide-gray-100">
         {sessions.map((session, i) => (
-          <div key={i} className={i > 0 ? "pt-5" : ""}>
+          <div key={i} className={i > 0 ? "pt-4" : ""}>
             <SessionChart session={session} />
           </div>
         ))}
