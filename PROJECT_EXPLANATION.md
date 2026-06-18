@@ -70,6 +70,20 @@ GeriRisk's prediction layer is also explainable at the product level. The system
 
 That combination of **prediction plus explanation plus action** is the USP. GeriRisk predicts risk, explains the reason behind the warning, and connects the user to follow-up through the appointment component. This creates a complete care loop rather than a passive reporting tool.
 
+## Data Storage and Security Through Supabase
+
+Because GeriRisk works with health-related wearable files, data handling is a major part of the product story. The project uses Supabase to create a more professional backend foundation for storing uploaded files and tracking them with structured metadata.
+
+When a user uploads a CSV, the file does not simply remain inside the browser. The frontend sends it to the backend, and the backend attempts to place it into Supabase Storage. Supabase Storage acts like a managed file storage system where uploaded CSVs can be organized inside buckets. In this project, the bucket is named `wearable-uploads`, and files are stored under generated `uploads/` paths so each file receives a unique location.
+
+At the same time, the project records file metadata in a Supabase database table called `uploads`. This table can store the original file name and the file path in storage. The reason this matters is that production systems need more than raw files. They need traceability. They need to know when a file was uploaded, which user or patient it belongs to, whether it was processed successfully, and which prediction result came from which dataset. Supabase gives GeriRisk the foundation to build that traceable data lifecycle.
+
+This is industry-level architecture because it follows the same separation used in scalable software systems: object storage for files, relational database tables for metadata, backend APIs for controlled processing, and policy-based access control for security. Rather than keeping sensitive patient files scattered on local machines or inside temporary browser state, GeriRisk moves toward centralized, governed storage.
+
+Supabase also enhances the security direction of the project. In a production setup, Supabase authentication can identify the user, database row-level security can restrict which records each user can access, and storage policies can control who can read or write files in the bucket. This means the platform can evolve toward role-based access: caregivers see assigned patients, doctors see clinical cases relevant to them, and administrators manage the system without exposing unnecessary patient data.
+
+For a VC audience, this is important because it shows that GeriRisk is not only an AI model wrapped in a dashboard. It is being structured like a real health technology platform. Prediction is the intelligence layer, but Supabase is part of the trust layer. It supports persistence, access control, auditability, and future scalability.
+
 ## Project Vision
 
 The long-term vision of GeriRisk is to become a decision-support layer for elderly care. It is not positioned as a replacement for doctors, and it is not presented as a diagnostic medical device. Instead, it acts as an intelligent monitoring assistant that helps care teams notice patterns sooner.
@@ -148,9 +162,17 @@ PapaParse is used to parse CSV data. Since the project begins with wearable expo
 
 ### Supabase
 
-Supabase is used as the data persistence layer. The upload route attempts to store CSV files in a `wearable-uploads` storage bucket and insert file metadata into an `uploads` database table. This is important because it moves the project beyond a purely local demo. It creates a foundation for persistent patient records, audit history, and later multi-user workflows.
+Supabase is used as the cloud data persistence layer for GeriRisk. In the current project, when a user uploads a wearable CSV file, the backend creates a unique file path and attempts to store the file inside a Supabase Storage bucket named `wearable-uploads`. After the file is stored, the system inserts a metadata record into an `uploads` database table. That metadata includes information such as the original file name and the storage path where the uploaded CSV is located.
 
-The upload route is designed gracefully. If Supabase is unreachable, the system logs a warning and continues processing the file locally. This is helpful for development and demos because the prediction flow can still work even if the cloud storage layer is not configured.
+This separation between file storage and metadata is important. The uploaded CSV itself is treated as a file object and stored in Supabase Storage. The database does not need to hold the entire file contents. Instead, the database stores a reference to the file, which is a more scalable and maintainable architecture. In a production healthcare system, this pattern can later support patient IDs, upload history, clinician ownership, timestamps, processing status, audit trails, and links between uploaded files and prediction results.
+
+Supabase is an industry-level backend technology because it is built around managed PostgreSQL, storage, authentication, access policies, and API generation. PostgreSQL is a mature relational database used widely in production systems. By using Supabase, GeriRisk avoids building a fragile custom file server and database layer from scratch. Instead, the project uses a managed backend foundation that can scale into a real product architecture.
+
+From a security perspective, Supabase strengthens the project in several ways. First, uploaded files are not casually stored inside the frontend or exposed as plain local files. They are sent through a backend API route and stored in a controlled storage bucket. Second, Supabase supports access-control rules and storage policies, which means production versions of GeriRisk can restrict who can upload, read, or delete patient files. Third, Supabase integrates with authentication, allowing future versions to separate patients, caregivers, doctors, and administrators into different permission levels. Fourth, because metadata lives in a structured database table, the system can maintain traceability: who uploaded a file, when it was uploaded, where it is stored, and how it was processed.
+
+This is especially important for a healthcare-oriented product because wearable health files may contain sensitive patient information. A simple demo could process a file locally and then lose all history. GeriRisk is designed with a stronger path: files can be centrally stored, metadata can be tracked, and access can be governed through backend policies. That makes the architecture more credible for clinics, senior care facilities, and enterprise deployments.
+
+The upload route is also designed gracefully. If Supabase is unreachable, the system logs a warning and continues processing the file locally. This is helpful for development and demos because the prediction flow can still work even if the cloud storage layer is not configured. In production, the same architecture can be tightened so that storage, authentication, and access policies are mandatory before patient data is accepted.
 
 ### Python
 
@@ -467,7 +489,13 @@ After validating the file, the backend creates a unique file name using the curr
 
 The backend then attempts to upload the file to Supabase Storage under the `wearable-uploads` bucket. If the storage upload succeeds, the backend inserts a metadata record into the `uploads` table with the original file name and file path.
 
-This gives the system a persistence foundation. In the current flow, the dashboard uses local storage for session transfer, but Supabase storage and metadata create the base for future patient history, audit logs, and multi-session review.
+This means the system separates the physical file from its searchable record. The CSV file is stored as an object in the storage bucket, while the database table stores the information needed to find and manage that object. This is a common industry architecture because large files are better handled by object storage, while structured metadata is better handled by a database.
+
+For example, the storage bucket may contain the actual uploaded wearable file at a path like `uploads/1718700000000-patient-data.csv`. The database table can then store the original file name, the generated file path, and the upload timestamp. Later, when the system needs to reprocess the latest file, the `/api/process` route can query the `uploads` table, find the most recent file path, download that file from Supabase Storage, and run the same parsing, preprocessing, and prediction pipeline again.
+
+This gives the system a persistence foundation. In the current flow, the dashboard uses local storage for session transfer, but Supabase storage and metadata create the base for future patient history, audit logs, and multi-session review. For a production version, this same foundation can be extended so every patient has a record of uploaded wearable files, every file has a processing status, and every prediction can be traced back to the exact dataset that generated it.
+
+This also enhances security because sensitive files are no longer treated as temporary frontend-only artifacts. They are routed through a backend endpoint and placed into a managed storage layer where access can be controlled through Supabase policies. In a healthcare setting, that control is crucial. A caregiver should only see patients assigned to them. A doctor should only access files relevant to their cases. An administrator should be able to audit uploads without casually exposing private health data. Supabase gives the project the backend primitives needed to build those permission boundaries.
 
 ### Step 5: Backend Converts File to Text
 
