@@ -200,3 +200,179 @@ body {
   font-family: var(--font-sans);
   letter-spacing: var(--tracking-normal);
 }
+
+/* ─── Landing page animations ─── */
+
+@keyframes gradient-drift {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(10%, -15%) scale(1.1); }
+  50% { transform: translate(-5%, 10%) scale(0.95); }
+  75% { transform: translate(-10%, -5%) scale(1.05); }
+}
+
+@keyframes gradient-drift-reverse {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(-12%, 10%) scale(1.08); }
+  50% { transform: translate(8%, -8%) scale(0.92); }
+  75% { transform: translate(5%, 12%) scale(1.1); }
+}
+
+@keyframes gradient-drift-slow {
+  0%, 100% { transform: translate(0%, 0%) scale(1.05); }
+  33% { transform: translate(15%, -10%) scale(0.95); }
+  66% { transform: translate(-8%, 15%) scale(1.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes border-rotate {
+  0% { --border-angle: 0deg; }
+  100% { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-blob-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 0, 201, 0.12) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: gradient-drift 12s ease-in-out infinite;
+}
+
+.hero-blob-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  top: -50px;
+  right: -150px;
+  animation: gradient-drift-reverse 15s ease-in-out infinite;
+}
+
+.hero-blob-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  bottom: 0;
+  left: 30%;
+  animation: gradient-drift-slow 18s ease-in-out infinite;
+}
+
+/* Gradient border animation for bento cards */
+.bento-card-glow {
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+
+.bento-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 40%,
+    rgba(0, 0, 201, 0.3) 50%,
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: border-rotate 4s linear infinite;
+}
+
+.bento-card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Shimmer button effect */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Timeline connector line */
+.timeline-connector {
+  position: absolute;
+  top: 28px;
+  left: calc(16.67%);
+  right: calc(16.67%);
+  height: 2px;
+  background: linear-gradient(90deg, #0000c9, #6366f1, #0000c9);
+  z-index: 0;
+}
+
+/* Glassmorphism card for benefits */
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* CTA gradient border */
+.cta-glow {
+  position: relative;
+}
+
+.cta-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 1.75rem;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    #0000c9,
+    #6366f1,
+    #8b5cf6,
+    #6366f1,
+    #0000c9
+  );
+  z-index: -1;
+  animation: border-rotate 6s linear infinite;
+  opacity: 0.6;
+  filter: blur(8px);
+}

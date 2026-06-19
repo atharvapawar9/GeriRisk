@@ -21,7 +21,6 @@ import {
   Upload,
   ChevronDown,
   ArrowRight,
-  CheckCircle2,
 } from "lucide-react";
 
 /* ───────────────────────── animation variants ───────────────────────── */
@@ -44,7 +43,6 @@ const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "Dashboard", href: "#dashboard" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -161,16 +159,15 @@ export default function Home() {
   const heroImgRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroImgRef,
-    offset: ["start end", "end start"],   // track from entering to leaving viewport
+    offset: ["start end", "end start"],
   });
-  // scale: 1 → 1.05 at midpoint → back to 1
   const heroImgScale = useTransform(heroScroll, [0, 0.5, 1], [1, 1.25, 1]);
 
   return (
     <main className="min-h-screen bg-[#fbfbfd] font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
-      {/* ───────────── NAVBAR ───────────── */}
+      {/* ───────────── NAVBAR (Glassmorphism) ───────────── */}
       <motion.header
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl bg-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl bg-white/70 backdrop-blur-xl rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50"
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -189,14 +186,14 @@ export default function Home() {
               <a
                 key={l.label}
                 href={l.href}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[15px] font-bold text-black transition-all hover:bg-gray-100"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[15px] font-bold text-black/80 transition-all hover:bg-white/80 hover:text-black"
               >
                 {l.label}
               </a>
             ))}
           </nav>
           <Link href="/login">
-            <button className="bg-[#0000c9] hover:bg-[#0000a0] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md cursor-pointer">
+            <button className="btn-shimmer bg-[#0000c9] hover:bg-[#0000a0] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm hover:shadow-md cursor-pointer">
               Sign In
             </button>
           </Link>
@@ -208,8 +205,10 @@ export default function Home() {
         id="home"
         className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden bg-white"
       >
-        {/* subtle radial glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full bg-[#0000c9]/5 blur-[120px] pointer-events-none" />
+        {/* Animated gradient mesh background */}
+        <div className="hero-blob hero-blob-1" />
+        <div className="hero-blob hero-blob-2" />
+        <div className="hero-blob hero-blob-3" />
 
         <motion.div
           className="relative z-10 max-w-4xl mx-auto text-center px-6"
@@ -232,21 +231,23 @@ export default function Home() {
           <motion.h1
             variants={fadeUp}
             custom={1}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 leading-[1.08] tracking-tight mb-6"
           >
             Predict Vital Risks
             <br />
-            <span className="text-[#0000c9]">Before They Even Happen</span>
+            <span className="text-[#0000c9]">
+              Before They Even Happen
+            </span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             AI-powered monitoring for elderly patients using wearable health
             data. Detect anomalies, prevent emergencies, and support clinical
-            decisions all from one dashboard.
+            decisions — all from one dashboard.
           </motion.p>
 
           <motion.div
@@ -255,19 +256,19 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/login">
-              <button className="group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-3.5 rounded-full text-base font-medium shadow-lg shadow-[#0000c9]/10 hover:shadow-[#0000c9]/20 transition-all cursor-pointer">
+              <button className="btn-shimmer group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-4 rounded-full text-base font-medium shadow-lg shadow-[#0000c9]/20 hover:shadow-[#0000c9]/30 transition-all cursor-pointer">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
-            <a href="#dashboard">
-              <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-8 py-3.5 rounded-full text-base font-semibold border border-gray-200 transition-all cursor-pointer">
-                View Dashboard
+            <a href="#features">
+              <button className="flex items-center gap-2 bg-white/80 backdrop-blur-sm hover:bg-white text-gray-800 px-8 py-4 rounded-full text-base font-semibold border border-gray-200/80 transition-all cursor-pointer shadow-sm">
+                Explore Features
               </button>
             </a>
           </motion.div>
 
-          {/* floating dashboard card */}
+          {/* Dashboard preview */}
           <motion.div
             ref={heroImgRef}
             variants={fadeUp}
@@ -276,7 +277,7 @@ export default function Home() {
           >
             <motion.div
               style={{ scale: heroImgScale }}
-              className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-200 bg-white will-change-transform"
+              className="rounded-2xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-200/60 bg-white will-change-transform"
             >
               <Image
                 src="/Dashboard M.png"
@@ -289,13 +290,13 @@ export default function Home() {
               />
             </motion.div>
             {/* glow underneath */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-[#a8bcff]/15 blur-3xl rounded-full" />
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-4/5 h-20 bg-[#0000c9]/8 blur-[60px] rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
       {/* ═══════════════════ 2 · TRUST STRIP ═══════════════════ */}
-      <section className="py-12 bg-[#f5f5f7] border-b border-gray-200/60">
+      <section className="py-12 bg-[#f5f5f7] border-y border-gray-200/40">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-8">
             Trusted for AI-powered health monitoring
@@ -314,73 +315,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════ 3 · PRODUCT OVERVIEW ═══════════════════ */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              One Platform.{" "}
-              <span className="text-[#0000c9]">
-                Complete Cardiac Risk Monitoring.
-              </span>
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Everything clinicians need to monitor, predict, and prevent
-              cardiac events in elderly patients.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* left – text */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-            >
-              <ul className="space-y-5">
-                {[
-                  "Real-time cardiac monitoring from wearable data",
-                  "AI-based risk scoring across three domains",
-                  "Early anomaly detection with smart alerts",
-                  "Long-term patient tracking and trend analysis",
-                ].map((txt) => (
-                  <li key={txt} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-[#0000c9] mt-0.5 shrink-0" />
-                    <span className="text-gray-600 text-base">{txt}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* right – screenshot */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="rounded-2xl overflow-hidden shadow-xl border border-gray-100 bg-white"
-            >
-              <Image
-                src="/Dashboard M.png"
-                alt="GeriRisk Dashboard"
-                width={1920}
-                height={1080}
-                unoptimized
-                className="w-full h-auto"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ 4 · FEATURES GRID ═══════════════════ */}
+      {/* ═══════════════════ 3 · FEATURES — BENTO GRID ═══════════════════ */}
       <section id="features" className="py-24 bg-[#f5f5f7]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
@@ -390,84 +325,114 @@ export default function Home() {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Everything Clinicians Need
+            <p className="text-sm font-semibold text-[#0000c9] uppercase tracking-wider mb-3">
+              Features
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+              Everything Clinicians{" "}
+              <span className="text-[#0000c9]">Need</span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">
               A comprehensive toolkit built for modern geriatric care.
             </p>
           </motion.div>
 
-          <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
-          >
-            {FEATURES.map((f, i) => (
-              <motion.div
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {FEATURES.map((f) => (
+              <div
                 key={f.title}
-                variants={fadeUp}
-                custom={i}
-                className="group bg-white rounded-2xl p-7 border border-gray-200/60 hover:border-[#0000c9]/30 shadow-sm hover:shadow-lg transition-all duration-300"
+                className="bento-card-glow group rounded-3xl p-8 border border-gray-200/60 shadow-sm hover:shadow-xl transition-all duration-500"
               >
-                <div className="h-12 w-12 rounded-2xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center mb-5 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
-                  <f.icon className="h-6 w-6" />
+                <div className="relative z-10">
+                  <div className="h-12 w-12 rounded-2xl bg-[#0000c9]/8 text-[#0000c9] flex items-center justify-center mb-5 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
+                    <f.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {f.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    {f.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  {f.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {f.desc}
-                </p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════ 5 · VISUAL PRODUCT ═══════════════════ */}
-      <section id="dashboard" className="py-24 bg-white">
+      {/* ═══════════════════ 4 · HOW IT WORKS — CONNECTED TIMELINE ═══════════════════ */}
+      <section id="how-it-works" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            className="text-center mb-14"
+            className="text-center mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              See GeriRisk <span className="text-[#0000c9]">in Action</span>
+            <p className="text-sm font-semibold text-[#0000c9] uppercase tracking-wider mb-3">
+              How It Works
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+              Three Steps to{" "}
+              <span className="text-[#0000c9]">
+                Actionable Insights
+              </span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              A real-time snapshot of the monitoring dashboard built for
-              clinical clarity.
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+              From raw wearable data to cardiac risk prediction in minutes.
             </p>
           </motion.div>
 
-          <motion.div
-            className="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-gray-100 bg-white"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.7 }}
-          >
-            <Image
-              src="/Dashboard M.png"
-              alt="GeriRisk Dashboard Full View"
-              width={1920}
-              height={1080}
-              unoptimized
-              className="w-full h-auto"
-            />
-          </motion.div>
+          {/* Timeline */}
+          <div className="relative max-w-5xl mx-auto">
+            {/* Connector line (desktop only) */}
+            <div className="hidden md:block timeline-connector" />
+
+            <div className="grid md:grid-cols-3 gap-12 md:gap-8">
+              {STEPS.map((s, i) => (
+                <div key={s.title} className="relative text-center">
+                  {/* Step circle */}
+                  <div className="relative z-10 mx-auto mb-8">
+                    <div className="h-14 w-14 mx-auto rounded-full bg-gradient-to-br from-[#0000c9] to-[#6366f1] text-white flex items-center justify-center shadow-lg shadow-[#0000c9]/20">
+                      <s.icon className="h-6 w-6" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    {s.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+                    {s.desc}
+                  </p>
+
+                  {/* Arrow between steps (desktop) */}
+                  {i < STEPS.length - 1 && (
+                    <div className="hidden md:flex absolute top-6 -right-[20px] z-10 h-8 w-8 items-center justify-center text-[#0000c9]/30">
+                      <ArrowRight className="h-5 w-5" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════ 6 · HOW IT WORKS ═══════════════════ */}
-      <section id="how-it-works" className="py-24 bg-[#f5f5f7]">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* ═══════════════════ 5 · BENEFITS — DARK GLASSMORPHISM ═══════════════════ */}
+      <section
+        className="py-24 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #050520 0%, #0a0a3a 30%, #0000c9 100%)",
+        }}
+      >
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#6366f1]/10 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#0000c9]/15 blur-[100px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -475,107 +440,42 @@ export default function Home() {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How It Works
+            <p className="text-sm font-semibold text-blue-300 uppercase tracking-wider mb-3">
+              Why GeriRisk
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+              Why Clinicians{" "}
+              <span className="text-blue-300">
+                Choose GeriRisk
+              </span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Three simple steps from raw wearable data to actionable cardiac
-              risk insights.
+            <p className="text-blue-200/60 max-w-2xl mx-auto text-lg">
+              Purpose-built for the unique challenges of geriatric cardiac care.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {STEPS.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                className="relative bg-white rounded-2xl p-8 border border-gray-200/60 shadow-sm text-center group hover:shadow-lg transition-all duration-300"
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {BENEFITS.map((b) => (
+              <div
+                key={b.title}
+                className="glass-card rounded-2xl p-7 text-center"
               >
-                <div className="text-5xl font-black text-[#0000c9]/10 absolute top-4 right-6 select-none">
-                  {s.num}
+                <div className="h-14 w-14 mx-auto rounded-2xl bg-white/10 text-blue-300 flex items-center justify-center mb-5">
+                  <b.icon className="h-7 w-7" />
                 </div>
-                <div className="h-14 w-14 mx-auto rounded-2xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center mb-6 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
-                  <s.icon className="h-7 w-7" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {s.desc}
+                <h4 className="font-bold text-white text-lg mb-2">
+                  {b.title}
+                </h4>
+                <p className="text-blue-200/60 text-sm leading-relaxed">
+                  {b.desc}
                 </p>
-                {i < STEPS.length - 1 && (
-                  <div className="hidden md:flex absolute top-23 -right-[15px] z-10 h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 text-gray-300">
-                    <ArrowRight className="h-5 w-5" />
-                  </div>
-                )}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════ 7 · BENEFITS ═══════════════════ */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-14 items-center">
-            {/* left – image */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-              className="rounded-2xl overflow-hidden shadow-xl border border-gray-100"
-            >
-              <Image
-                src="/Dashboard M.png"
-                alt="GeriRisk Dashboard Benefits"
-                width={1920}
-                height={1080}
-                unoptimized
-                className="w-full h-auto"
-              />
-            </motion.div>
-
-            {/* right – text */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-                Why Clinicians{" "}
-                <span className="text-[#0000c9]">Choose GeriRisk</span>
-              </h2>
-              <div className="space-y-6">
-                {BENEFITS.map((b) => (
-                  <div
-                    key={b.title}
-                    className="flex items-start gap-4 group"
-                  >
-                    <div className="h-10 w-10 rounded-2xl bg-[#0000c9]/10 text-[#0000c9] flex items-center justify-center shrink-0 group-hover:bg-[#0000c9] group-hover:text-white transition-colors duration-300">
-                      <b.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-1">
-                        {b.title}
-                      </h4>
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                        {b.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════ 8 · FAQ ═══════════════════ */}
+      {/* ═══════════════════ 6 · FAQ ═══════════════════ */}
       <section id="faq" className="py-24 bg-[#f5f5f7]">
         <div className="max-w-3xl mx-auto px-6">
           <motion.div
@@ -585,10 +485,16 @@ export default function Home() {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
+            <p className="text-sm font-semibold text-[#0000c9] uppercase tracking-wider mb-3">
+              FAQ
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+              Frequently Asked{" "}
+              <span className="text-[#0000c9]">
+                Questions
+              </span>
             </h2>
-            <p className="text-gray-500">
+            <p className="text-gray-500 text-lg">
               Common questions about GeriRisk and cardiac risk monitoring.
             </p>
           </motion.div>
@@ -634,11 +540,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════ 9 · CTA ═══════════════════ */}
+      {/* ═══════════════════ 7 · CTA ═══════════════════ */}
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
-            className="rounded-3xl p-12 md:p-16 text-center"
+            className="cta-glow rounded-3xl p-12 md:p-16 text-center relative overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, #0000c9 0%, #000080 50%, #000060 100%)",
@@ -648,25 +554,37 @@ export default function Home() {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.7 }}
           >
+            {/* Decorative dots */}
+            <div className="absolute top-6 left-6 w-2 h-2 rounded-full bg-white/20" />
+            <div className="absolute top-12 right-16 w-1.5 h-1.5 rounded-full bg-white/15" />
+            <div className="absolute bottom-10 left-20 w-1 h-1 rounded-full bg-white/20" />
+            <div className="absolute bottom-8 right-10 w-2.5 h-2.5 rounded-full bg-white/10" />
+
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Start Monitoring Cardiac Risk Today
             </h2>
-            <p className="text-gray-300 max-w-xl mx-auto mb-8">
+            <p className="text-blue-200/70 max-w-xl mx-auto mb-8">
               Join clinicians already using AI-driven insights to protect
               elderly patients. Get started in minutes.
             </p>
             <Link href="/login">
-              <button className="group inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-3.5 rounded-full text-base font-semibold shadow-lg transition-all cursor-pointer">
+              <button className="btn-shimmer group inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-4 rounded-full text-base font-semibold shadow-lg transition-all cursor-pointer mb-6">
                 Get Started Free
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
+            <p className="text-blue-200/40 text-sm">
+              No credit card required · HIPAA compliant · Setup in 2 minutes
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* ═══════════════════ 10 · FOOTER ═══════════════════ */}
-      <footer className="bg-[#1d1d1f] text-gray-400 py-16 px-6">
+      {/* ═══════════════════ 8 · FOOTER ═══════════════════ */}
+      <footer className="relative bg-[#0a0a1a] text-gray-400 py-16 px-6">
+        {/* Gradient top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0000c9]/50 to-transparent" />
+
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* brand */}
           <div>
@@ -677,7 +595,7 @@ export default function Home() {
               height={40}
               className="h-8 w-auto mb-4"
             />
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-gray-500">
               AI-powered cardiac risk monitoring for elderly patients.
             </p>
           </div>
@@ -698,10 +616,10 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  href="#dashboard"
+                  href="#how-it-works"
                   className="hover:text-white transition-colors"
                 >
-                  Dashboard
+                  How It Works
                 </a>
               </li>
               <li>
@@ -751,11 +669,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
+        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} GeriRisk AI. All rights reserved.
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-600">
             Not a medical device. For clinical decision support only.
           </p>
         </div>
