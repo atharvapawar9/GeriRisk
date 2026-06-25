@@ -20,7 +20,6 @@ import {
   Eye,
   Upload,
   ChevronDown,
-  ArrowRight,
 } from "lucide-react";
 
 /* ───────────────────────── animation variants ───────────────────────── */
@@ -256,9 +255,8 @@ export default function Home() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/login">
-              <button className="btn-shimmer group flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-4 rounded-full text-base font-medium shadow-lg shadow-[#0000c9]/20 hover:shadow-[#0000c9]/30 transition-all cursor-pointer">
+              <button className="btn-shimmer flex items-center gap-2 bg-[#0000c9] hover:bg-[#0000a0] text-white px-8 py-4 rounded-full text-base font-medium shadow-lg shadow-[#0000c9]/20 hover:shadow-[#0000c9]/30 transition-all cursor-pointer">
                 Get Started Free
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
             <a href="#features">
@@ -407,12 +405,7 @@ export default function Home() {
                     {s.desc}
                   </p>
 
-                  {/* Arrow between steps (desktop) */}
-                  {i < STEPS.length - 1 && (
-                    <div className="hidden md:flex absolute top-6 -right-[20px] z-10 h-8 w-8 items-center justify-center text-[#0000c9]/30">
-                      <ArrowRight className="h-5 w-5" />
-                    </div>
-                  )}
+
                 </div>
               ))}
             </div>
@@ -568,9 +561,8 @@ export default function Home() {
               elderly patients. Get started in minutes.
             </p>
             <Link href="/login">
-              <button className="btn-shimmer group inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-4 rounded-full text-base font-semibold shadow-lg transition-all cursor-pointer mb-6">
+              <button className="btn-shimmer inline-flex items-center gap-2 bg-white text-[#0000c9] hover:bg-gray-50 px-8 py-4 rounded-full text-base font-semibold shadow-lg transition-all cursor-pointer mb-6">
                 Get Started Free
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
             <p className="text-blue-200/40 text-sm">
