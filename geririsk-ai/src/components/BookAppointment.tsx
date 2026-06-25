@@ -297,7 +297,7 @@ export default function BookAppointment() {
                 {/* Action Buttons */}
                 <div className="mt-6 flex flex-col gap-3">
                   <a
-                    href={`mailto:${selectedDoctor.email}`}
+                    href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(selectedDoctor.email)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm"
